@@ -1,0 +1,691 @@
+{
+  "trained_at": "2026-11-14T18:14:59.492382+00:00",
+  "dataset_rows": 17658,
+  "train_rows": 14126,
+  "test_rows": 3532,
+  "cv_folds": 5,
+  "active_model_id": "multinomial_nb",
+  "urgency_model_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/urgency_classifier.joblib",
+  "urgency_f1_macro": 0.9664,
+  "f1_gain_vs_baseline_pct": 19.49,
+  "labels": [
+    "Aulas Inteligentes y Videoproyectores",
+    "Conectividad y Redes Wi-Fi",
+    "Correo Institucional y Cuentas",
+    "Equipos de Cómputo e Impresoras",
+    "Plataformas Académicas (Aula Web / Vortal)",
+    "Software y Licenciamiento"
+  ],
+  "top_keywords_per_service": {
+    "Aulas Inteligentes y Videoproyectores": [
+      {
+        "term": "del aula",
+        "weight": 2.1587
+      },
+      {
+        "term": "videoproyector",
+        "weight": 2.0097
+      },
+      {
+        "term": "pantalla",
+        "weight": 1.8668
+      },
+      {
+        "term": "salon",
+        "weight": 1.6494
+      },
+      {
+        "term": "la pantalla",
+        "weight": 1.6236
+      },
+      {
+        "term": "en la",
+        "weight": 1.5877
+      },
+      {
+        "term": "sobrecalentamiento reportado",
+        "weight": 1.5439
+      },
+      {
+        "term": "del salon",
+        "weight": 1.5366
+      },
+      {
+        "term": "pantalla reportado",
+        "weight": 1.477
+      },
+      {
+        "term": "agotada",
+        "weight": 1.4752
+      },
+      {
+        "term": "lampara",
+        "weight": 1.4752
+      },
+      {
+        "term": "lampara agotada",
+        "weight": 1.4752
+      },
+      {
+        "term": "el videoproyector",
+        "weight": 1.4257
+      },
+      {
+        "term": "videoproyector muestra",
+        "weight": 1.4064
+      },
+      {
+        "term": "alerta de",
+        "weight": 1.4064
+      }
+    ],
+    "Conectividad y Redes Wi-Fi": [
+      {
+        "term": "enlace",
+        "weight": 1.8541
+      },
+      {
+        "term": "eduroam",
+        "weight": 1.8264
+      },
+      {
+        "term": "el aula",
+        "weight": 1.7607
+      },
+      {
+        "term": "enlace reportado",
+        "weight": 1.5962
+      },
+      {
+        "term": "red del",
+        "weight": 1.3856
+      },
+      {
+        "term": "el wi",
+        "weight": 1.3276
+      },
+      {
+        "term": "de red",
+        "weight": 1.3163
+      },
+      {
+        "term": "pero no",
+        "weight": 1.2204
+      },
+      {
+        "term": "permite acceder",
+        "weight": 1.1996
+      },
+      {
+        "term": "conectado pero",
+        "weight": 1.1996
+      },
+      {
+        "term": "fi aparece",
+        "weight": 1.1996
+      },
+      {
+        "term": "acceder al",
+        "weight": 1.1996
+      },
+      {
+        "term": "institucional ni",
+        "weight": 1.1996
+      },
+      {
+        "term": "aparece conectado",
+        "weight": 1.1996
+      },
+      {
+        "term": "acceder",
+        "weight": 1.1996
+      }
+    ],
+    "Correo Institucional y Cuentas": [
+      {
+        "term": "semestre",
+        "weight": 1.625
+      },
+      {
+        "term": "cuenta",
+        "weight": 1.6168
+      },
+      {
+        "term": "autenticacion",
+        "weight": 1.6164
+      },
+      {
+        "term": "semestre reportado",
+        "weight": 1.5561
+      },
+      {
+        "term": "buzon",
+        "weight": 1.5155
+      },
+      {
+        "term": "mfa",
+        "weight": 1.4921
+      },
+      {
+        "term": "de acceso",
+        "weight": 1.4484
+      },
+      {
+        "term": "institucional no",
+        "weight": 1.4477
+      },
+      {
+        "term": "para",
+        "weight": 1.3752
+      },
+      {
+        "term": "requiere habilitar",
+        "weight": 1.352
+      },
+      {
+        "term": "acceso para",
+        "weight": 1.352
+      },
+      {
+        "term": "habilitar cuenta",
+        "weight": 1.352
+      },
+      {
+        "term": "institucional permisos",
+        "weight": 1.352
+      },
+      {
+        "term": "docente vinculado",
+        "weight": 1.352
+      },
+      {
+        "term": "este semestre",
+        "weight": 1.352
+      }
+    ],
+    "Equipos de Cómputo e Impresoras": [
+      {
+        "term": "impresora",
+        "weight": 2.273
+      },
+      {
+        "term": "la impresora",
+        "weight": 2.0954
+      },
+      {
+        "term": "emite pitidos",
+        "weight": 1.6349
+      },
+      {
+        "term": "pitidos",
+        "weight": 1.6349
+      },
+      {
+        "term": "monitor",
+        "weight": 1.5334
+      },
+      {
+        "term": "windows reportado",
+        "weight": 1.529
+      },
+      {
+        "term": "azul",
+        "weight": 1.4798
+      },
+      {
+        "term": "pantallazo azul",
+        "weight": 1.4798
+      },
+      {
+        "term": "pantallazo",
+        "weight": 1.4798
+      },
+      {
+        "term": "monitor reportado",
+        "weight": 1.4317
+      },
+      {
+        "term": "presionar encendido",
+        "weight": 1.3894
+      },
+      {
+        "term": "presionar",
+        "weight": 1.3894
+      },
+      {
+        "term": "imagen en",
+        "weight": 1.3894
+      },
+      {
+        "term": "el monitor",
+        "weight": 1.3894
+      },
+      {
+        "term": "encendido no",
+        "weight": 1.3894
+      }
+    ],
+    "Plataformas Académicas (Aula Web / Vortal)": [
+      {
+        "term": "aula web",
+        "weight": 1.9715
+      },
+      {
+        "term": "web",
+        "weight": 1.9715
+      },
+      {
+        "term": "datos reportado",
+        "weight": 1.5016
+      },
+      {
+        "term": "en vortal",
+        "weight": 1.4632
+      },
+      {
+        "term": "asignaturas",
+        "weight": 1.3266
+      },
+      {
+        "term": "asignaturas matriculadas",
+        "weight": 1.3266
+      },
+      {
+        "term": "tras ingresar",
+        "weight": 1.3266
+      },
+      {
+        "term": "las asignaturas",
+        "weight": 1.3266
+      },
+      {
+        "term": "web no",
+        "weight": 1.3266
+      },
+      {
+        "term": "el modulo",
+        "weight": 1.3266
+      },
+      {
+        "term": "ingresar con",
+        "weight": 1.3266
+      },
+      {
+        "term": "con la",
+        "weight": 1.3266
+      },
+      {
+        "term": "matriculadas tras",
+        "weight": 1.3266
+      },
+      {
+        "term": "muestra las",
+        "weight": 1.3266
+      },
+      {
+        "term": "las",
+        "weight": 1.3266
+      }
+    ],
+    "Software y Licenciamiento": [
+      {
+        "term": "instalar",
+        "weight": 2.2455
+      },
+      {
+        "term": "licencia",
+        "weight": 2.1943
+      },
+      {
+        "term": "equipo reportado",
+        "weight": 2.1466
+      },
+      {
+        "term": "paquete",
+        "weight": 1.8704
+      },
+      {
+        "term": "activacion",
+        "weight": 1.6458
+      },
+      {
+        "term": "de licencias",
+        "weight": 1.4954
+      },
+      {
+        "term": "servidor de",
+        "weight": 1.4954
+      },
+      {
+        "term": "licencias",
+        "weight": 1.4954
+      },
+      {
+        "term": "en los",
+        "weight": 1.4044
+      },
+      {
+        "term": "los equipos",
+        "weight": 1.4044
+      },
+      {
+        "term": "paquete estadistico",
+        "weight": 1.3734
+      },
+      {
+        "term": "estadistico",
+        "weight": 1.3734
+      },
+      {
+        "term": "clave de",
+        "weight": 1.3112
+      },
+      {
+        "term": "la aplicacion",
+        "weight": 1.3112
+      },
+      {
+        "term": "computador solicita",
+        "weight": 1.3112
+      }
+    ]
+  },
+  "models": [
+    {
+      "model_id": "keyword_baseline",
+      "display_name": "Dummy / Keyword Baseline (Reglas Simples)",
+      "is_baseline": true,
+      "rationale": "Clasificador determinístico basado únicamente en reglas manuales de coincidencia de palabras clave (sin vectorización TF-IDF ni aprendizaje de contexto). Sirve como punto de comparación base.",
+      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/keyword_baseline.joblib",
+      "train_seconds": 0.007,
+      "latency_ms": 0.0972,
+      "cv_folds": 5,
+      "cv_f1_mean": 0.7796,
+      "cv_f1_std": 0.004,
+      "accuracy": 0.7438,
+      "precision_macro": 0.8455,
+      "recall_macro": 0.7391,
+      "f1_macro": 0.7731,
+      "labels": [
+        "Aulas Inteligentes y Videoproyectores",
+        "Conectividad y Redes Wi-Fi",
+        "Correo Institucional y Cuentas",
+        "Equipos de Cómputo e Impresoras",
+        "Plataformas Académicas (Aula Web / Vortal)",
+        "Software y Licenciamiento"
+      ],
+      "confusion_matrix": [
+        [
+          358,
+          97,
+          4,
+          1,
+          3,
+          0
+        ],
+        [
+          3,
+          720,
+          1,
+          3,
+          92,
+          0
+        ],
+        [
+          2,
+          174,
+          424,
+          2,
+          66,
+          3
+        ],
+        [
+          4,
+          81,
+          1,
+          350,
+          20,
+          1
+        ],
+        [
+          13,
+          228,
+          4,
+          1,
+          546,
+          1
+        ],
+        [
+          13,
+          56,
+          20,
+          1,
+          10,
+          229
+        ]
+      ]
+    },
+    {
+      "model_id": "multinomial_nb",
+      "display_name": "Multinomial Naive Bayes (Alpha=0.5 Tuned)",
+      "is_baseline": false,
+      "rationale": "Modelo probabilístico bayesiano sobre TF-IDF (unigramas y bigramas) con suavizado de Laplace ajustado (alpha=0.5); muy rápido para inferencia pero asume independencia condicional entre términos.",
+      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/multinomial_nb.joblib",
+      "train_seconds": 1.956,
+      "latency_ms": 0.1389,
+      "cv_folds": 5,
+      "cv_f1_mean": 0.9756,
+      "cv_f1_std": 0.0021,
+      "accuracy": 0.9703,
+      "precision_macro": 0.9713,
+      "recall_macro": 0.9649,
+      "f1_macro": 0.968,
+      "labels": [
+        "Aulas Inteligentes y Videoproyectores",
+        "Conectividad y Redes Wi-Fi",
+        "Correo Institucional y Cuentas",
+        "Equipos de Cómputo e Impresoras",
+        "Plataformas Académicas (Aula Web / Vortal)",
+        "Software y Licenciamiento"
+      ],
+      "confusion_matrix": [
+        [
+          447,
+          3,
+          7,
+          2,
+          4,
+          0
+        ],
+        [
+          3,
+          806,
+          2,
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          3,
+          651,
+          3,
+          8,
+          3
+        ],
+        [
+          3,
+          5,
+          4,
+          435,
+          8,
+          2
+        ],
+        [
+          2,
+          3,
+          4,
+          1,
+          781,
+          2
+        ],
+        [
+          1,
+          11,
+          5,
+          2,
+          3,
+          307
+        ]
+      ]
+    },
+    {
+      "model_id": "logistic_regression",
+      "display_name": "Logistic Regression (TF-IDF 1-2, C=2.0)",
+      "is_baseline": false,
+      "rationale": "Clasificador lineal discriminativo con regularización L2 (C=2.0) sobre bigramas TF-IDF y balanceo de clases; entrega probabilidades calibradas ideales para flujos Human-in-the-Loop y explicabilidad de coeficientes.",
+      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/logistic_regression.joblib",
+      "train_seconds": 2.716,
+      "latency_ms": 0.1437,
+      "cv_folds": 5,
+      "cv_f1_mean": 0.9756,
+      "cv_f1_std": 0.0021,
+      "accuracy": 0.9703,
+      "precision_macro": 0.9713,
+      "recall_macro": 0.9649,
+      "f1_macro": 0.968,
+      "labels": [
+        "Aulas Inteligentes y Videoproyectores",
+        "Conectividad y Redes Wi-Fi",
+        "Correo Institucional y Cuentas",
+        "Equipos de Cómputo e Impresoras",
+        "Plataformas Académicas (Aula Web / Vortal)",
+        "Software y Licenciamiento"
+      ],
+      "confusion_matrix": [
+        [
+          447,
+          3,
+          7,
+          2,
+          4,
+          0
+        ],
+        [
+          3,
+          806,
+          2,
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          3,
+          651,
+          3,
+          8,
+          3
+        ],
+        [
+          3,
+          5,
+          4,
+          435,
+          8,
+          2
+        ],
+        [
+          2,
+          3,
+          4,
+          1,
+          781,
+          2
+        ],
+        [
+          1,
+          11,
+          5,
+          2,
+          3,
+          307
+        ]
+      ]
+    },
+    {
+      "model_id": "linear_svc",
+      "display_name": "LinearSVC Calibrado (CalibratedClassifierCV)",
+      "is_baseline": false,
+      "rationale": "Máquina de Soporte Vectorial de alto margen lineal sobre espacio disperso TF-IDF (unigramas+bigramas), calibrada mediante Platt Scaling (CalibratedClassifierCV) para emitir probabilidades reales de confianza.",
+      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/linear_svc.joblib",
+      "train_seconds": 5.643,
+      "latency_ms": 0.1601,
+      "cv_folds": 5,
+      "cv_f1_mean": 0.9756,
+      "cv_f1_std": 0.0021,
+      "accuracy": 0.9703,
+      "precision_macro": 0.9713,
+      "recall_macro": 0.9649,
+      "f1_macro": 0.968,
+      "labels": [
+        "Aulas Inteligentes y Videoproyectores",
+        "Conectividad y Redes Wi-Fi",
+        "Correo Institucional y Cuentas",
+        "Equipos de Cómputo e Impresoras",
+        "Plataformas Académicas (Aula Web / Vortal)",
+        "Software y Licenciamiento"
+      ],
+      "confusion_matrix": [
+        [
+          447,
+          3,
+          7,
+          2,
+          4,
+          0
+        ],
+        [
+          3,
+          806,
+          2,
+          3,
+          4,
+          1
+        ],
+        [
+          3,
+          3,
+          651,
+          3,
+          8,
+          3
+        ],
+        [
+          3,
+          5,
+          4,
+          435,
+          8,
+          2
+        ],
+        [
+          2,
+          3,
+          4,
+          1,
+          781,
+          2
+        ],
+        [
+          1,
+          11,
+          5,
+          2,
+          3,
+          307
+        ]
+      ]
+    }
+  ]
+}
