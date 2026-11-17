@@ -1,0 +1,71 @@
+<!-- VISTA 8: MI PERFIL Y SEGURIDAD -->
+<section id="view-profile" class="hidden max-w-5xl mx-auto space-y-6">
+  <div class="space-y-1">
+    <p class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#006837]">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span><span>CUENTA INSTITUCIONAL</span>
+    </p>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Mi perfil y seguridad</h1>
+    <p class="text-xs sm:text-sm text-slate-600">Actualiza tu sede de atención y gestiona tus credenciales de acceso CASAGBI.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <form id="profile-form" class="lg:col-span-7 casagbi-profile-card p-6 space-y-4">
+      <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Datos institucionales</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div class="sm:col-span-2">
+          <label for="profile-full-name" class="block font-semibold text-slate-800 mb-1">Nombre completo</label>
+          <input id="profile-full-name" type="text" required minlength="3" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm" />
+        </div>
+        <div>
+          <label for="profile-email" class="block font-semibold text-slate-800 mb-1">Correo institucional</label>
+          <input id="profile-email" type="email" disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-xs" />
+        </div>
+        <div>
+          <label for="profile-role" class="block font-semibold text-slate-800 mb-1">Rol asignado</label>
+          <input id="profile-role" type="text" disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-xs uppercase" />
+        </div>
+        <div>
+          <label for="profile-sede" class="block font-semibold text-slate-800 mb-1">Sede habitual</label>
+          <select id="profile-sede" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-xs">
+            <option value="Sede Sabanas (Valledupar)">Sede Sabanas (Valledupar)</option>
+            <option value="Sede Hurtado (Valledupar)">Sede Hurtado (Valledupar)</option>
+            <option value="Seccional Aguachica">Seccional Aguachica</option>
+          </select>
+        </div>
+        <div>
+          <label for="profile-area" class="block font-semibold text-slate-800 mb-1">Área / Dependencia</label>
+          <input id="profile-area" type="text" disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-xs" />
+        </div>
+      </div>
+      <div class="pt-2 flex justify-end">
+        <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold cursor-pointer transition">
+          Guardar cambios del perfil
+        </button>
+      </div>
+    </form>
+
+    <form id="profile-password-form" class="lg:col-span-5 casagbi-profile-card p-6 space-y-4">
+      <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">Cambiar contraseña</h2>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label for="profile-current-password" class="block font-semibold text-slate-800 mb-1">Contraseña actual</label>
+          <input id="profile-current-password" type="password" required autocomplete="current-password" class="w-full px-3.5 py-2 rounded-xl border border-slate-200" />
+        </div>
+        <div>
+          <label for="profile-new-password" class="block font-semibold text-slate-800 mb-1">Nueva contraseña (mín. 8 caracteres)</label>
+          <input id="profile-new-password" type="password" required minlength="8" autocomplete="new-password" class="w-full px-3.5 py-2 rounded-xl border border-slate-200" />
+          <div class="casagbi-strength-meter mt-2"><div id="profile-strength-fill" class="casagbi-strength-fill bg-slate-300" style="width: 0%"></div></div>
+        </div>
+        <div>
+          <label for="profile-new-password-confirm" class="block font-semibold text-slate-800 mb-1">Confirmar nueva contraseña</label>
+          <input id="profile-new-password-confirm" type="password" required minlength="8" autocomplete="new-password" class="w-full px-3.5 py-2 rounded-xl border border-slate-200" />
+        </div>
+      </div>
+      <div class="pt-2 flex justify-end">
+        <button type="submit" class="px-4 py-2.5 rounded-xl bg-[#0D1522] hover:bg-slate-800 text-white text-xs font-semibold cursor-pointer transition">
+          Actualizar contraseña
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

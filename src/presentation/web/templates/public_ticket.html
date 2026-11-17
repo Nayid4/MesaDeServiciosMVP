@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="bg-white border-b border-slate-200">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2.5 text-slate-900 font-bold text-sm">
+      <span class="w-8 h-8 rounded-xl bg-[#006837] text-white flex items-center justify-center">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" />
+        </svg>
+      </span>
+      <span>CASAGBI · Consulta Externa</span>
+    </a>
+    <a href="/login" class="px-3.5 py-2 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold">Acceso Institucional</a>
+  </div>
+</header>
+
+<main id="main-content" class="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-6">
+  <section class="bg-white rounded-2xl border border-slate-200 p-6 casagbi-shadow-card space-y-4">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-wider text-[#006837]">Seguimiento de Ticket · Sesión de Invitado</p>
+      <h1 class="text-2xl font-bold text-slate-900 mt-1">Consulta Segura de Radicado</h1>
+      <p class="text-xs text-slate-600 mt-1">Confirma tu correo institucional para acceder al estado, línea de tiempo y chat en vivo del caso.</p>
+    </div>
+
+    <form id="track-form" class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+      <div class="sm:col-span-5">
+        <label for="track-code" class="sr-only">Número de radicado</label>
+        <input id="track-code" type="text" required value="{{ ticket_code or '' }}" placeholder="MS-RED-2026-000001" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-mono uppercase focus:outline-none focus:border-[#006837]" />
+      </div>
+      <div class="sm:col-span-5">
+        <label for="track-email" class="sr-only">Correo del solicitante</label>
+        <input id="track-email" type="email" required placeholder="solicitante@unicesar.edu.co" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-[#006837]" />
+      </div>
+      <button type="submit" class="sm:col-span-2 px-4 py-2.5 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold cursor-pointer">
+        Validar
+      </button>
+    </form>
+
+    <div id="track-result" aria-live="polite" class="space-y-4"></div>
+  </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/features/landing/landing_view.js"></script>
+<script src="/static/js/features/ticket_chat_ws.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var form = document.getElementById("track-form");
+  var codeEl = document.getElementById("track-code");
+  var emailEl = document.getElementById("track-email");
+  var resultEl = document.getElementById("track-result");
+  var ws = null;
+  form?.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    if (ws) { ws.disconnect(); ws = null; }
+    resultEl.innerHTML = '<p class="text-xs text-slate-600">Validando radicado y correo institucional...</p>';
+    try {
+      var data = await window.CasagbiApi.post("/api/v1/tickets/public/lookup", {
+        ticket_code: codeEl.value.trim(),
+        email: emailEl.value.trim()
+      });
+      var t = data.ticket || {};
+      var esc = window.CasagbiUtils.escapeHtml;
+      resultEl.innerHTML =
+        '<div class="rounded-xl border border-slate-200 p-4 space-y-3 bg-slate-50">' +
+        '<div class="flex flex-wrap items-center justify-between gap-2">' +
+        '<span class="font-mono text-xs font-bold text-[#006837]">' + esc(t.code) + '</span>' +
+        '<span class="casagbi-status-pill casagbi-status-pill--ok">' + esc(t.status) + '</span></div>' +
+        '<h2 class="text-sm font-bold text-slate-900">' + esc(t.title) + '</h2>' +
+        '<p class="text-xs text-slate-600">' + esc(t.service_name) + ' · ' + esc(t.priority) + ' · ' + esc(t.requester_email_masked || "") + '</p>' +
+        '<div id="track-chat-host" class="rounded-xl border border-slate-200 bg-white p-3 space-y-2">' +
+        '<div id="track-chat-msgs" class="max-h-60 overflow-y-auto space-y-2 text-xs"></div>' +
+        '<form id="track-chat-form" class="flex gap-2">' +
+        '<input id="track-chat-input" type="text" required placeholder="Escribir al técnico..." class="flex-1 px-3 py-2 rounded-lg border border-slate-300 text-xs" />' +
+        '<button type="submit" class="px-3 py-2 rounded-lg bg-[#006837] text-white text-xs font-semibold">Enviar</button>' +
+        '</form></div></div>';
+      ws = window.CasagbiChatWS ? window.CasagbiChatWS.attachGuestChat({
+        ticketId: t.id, guestToken: data.ticket_guest_token,
+        messagesEl: document.getElementById("track-chat-msgs"),
+        formEl: document.getElementById("track-chat-form"),
+        inputEl: document.getElementById("track-chat-input")
+      }) : null;
+    } catch (err) {
+      resultEl.innerHTML = '<div class="rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-900">' + window.CasagbiUtils.escapeHtml(err.message) + '</div>';
+    }
+  });
+});
+</script>
+{% endblock %}

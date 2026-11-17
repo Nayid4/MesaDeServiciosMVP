@@ -1,0 +1,47 @@
+# Python y entornos virtuales
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Pruebas, linters y notebooks
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Base de datos SQLite en ejecución y archivos WAL
+*.db
+*.sqlite
+*.sqlite3
+*-wal
+*-shm
+*-journal
+
+# Archivos cargados en ejecución y registros
+data/uploads/*
+!data/uploads/.gitkeep
+data/attachments/*
+!data/attachments/.gitkeep
+*.log
+
+# Node, sistema operativo e IDE
+node_modules/
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

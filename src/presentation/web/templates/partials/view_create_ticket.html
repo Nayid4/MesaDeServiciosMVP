@@ -1,0 +1,172 @@
+<!-- VISTA 3: CREAR TICKET -->
+<section id="view-create-ticket" class="hidden max-w-6xl mx-auto space-y-5">
+  <div class="space-y-1">
+    <p class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#006837]">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+      <span>OPERACIONES · ITIL v4</span>
+    </p>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Crear ticket</h1>
+    <p class="text-xs sm:text-sm text-slate-600">Registra un incidente o solicitud para iniciar su atención.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200/80 p-6 casagbi-shadow-card space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-emerald-50 text-[#006837] border border-emerald-200/80 text-xs font-bold flex items-center justify-center shrink-0">01</span>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Cuéntanos qué necesitas</h2>
+            <p class="text-xs text-slate-600">Los campos marcados con <span class="text-red-600 font-semibold">*</span> son obligatorios.</p>
+          </div>
+        </div>
+        <label class="inline-flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+          <input id="create-sim-ai-fail" type="checkbox" class="rounded border-slate-300 text-[#006837]" />
+          <span>Simular fallo de IA (RNF-06)</span>
+        </label>
+      </div>
+
+      <div id="ct-draft-banner" class="hidden px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2 text-xs">
+        <span id="ct-draft-status" class="text-slate-700 font-medium">Borrador local guardado automáticamente</span>
+        <button id="ct-clear-draft-btn" type="button" class="text-red-700 font-semibold hover:underline cursor-pointer">Descartar borrador</button>
+      </div>
+
+      <form id="create-ticket-form" class="space-y-4" novalidate>
+        <div>
+          <label for="ct-title" class="block text-xs font-semibold text-slate-800 mb-1.5">Asunto del caso <span class="text-red-600">*</span></label>
+          <input id="ct-title" type="text" required minlength="5" placeholder="Ej. No puedo conectarme a la red Wi-Fi Eduroam" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#006837]/15 focus:border-[#006837]" />
+          <p id="ct-title-error" class="hidden text-[11px] text-red-700 mt-1" role="alert"></p>
+        </div>
+
+        <div>
+          <label for="ct-desc" class="block text-xs font-semibold text-slate-800 mb-1.5">Descripción detallada <span class="text-red-600">*</span></label>
+          <textarea id="ct-desc" rows="4" required minlength="15" placeholder="Describe qué sucede, cuándo comenzó y qué intentaste hacer..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#006837]/15 focus:border-[#006837]"></textarea>
+          <p class="text-[11px] text-slate-600 mt-1">Incluye el mensaje de error si aparece. Mínimo 15 caracteres.</p>
+          <p id="ct-desc-error" class="hidden text-[11px] text-red-700 mt-1" role="alert"></p>
+        </div>
+
+        <div id="ct-kb-suggestions" class="hidden rounded-xl border border-blue-200 bg-blue-50/70 p-4 space-y-2 text-xs"></div>
+
+        <div class="rounded-xl border border-emerald-200/80 bg-[#F1F8F4] p-3.5 flex flex-wrap items-center justify-between gap-3">
+          <div id="ct-ai-preview-box" class="text-xs text-slate-700">
+            Escribe asunto y descripción o presiona <strong>Analizar con IA</strong> para sugerir servicio y prioridad OR-03.
+          </div>
+          <button id="ct-analyze-btn" type="button" class="px-3.5 py-2 rounded-xl bg-white border border-emerald-200 text-[#006837] hover:bg-emerald-50 text-xs font-semibold cursor-pointer transition shrink-0">
+            Analizar con IA
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="ct-service" class="block text-xs font-semibold text-slate-800 mb-1.5">Servicio TIC <span class="text-red-600">*</span></label>
+            <select id="ct-service" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-white"></select>
+            <p id="ct-service-error" class="hidden text-[11px] text-red-700 mt-1" role="alert"></p>
+          </div>
+
+          <div>
+            <label for="ct-urgency" class="block text-xs font-semibold text-slate-800 mb-1.5">¿Qué tan urgente es? <span class="text-red-600">*</span></label>
+            <select id="ct-urgency" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-white">
+              <option value="Alta">Alta — Actividad detenida sin alternativa</option>
+              <option value="Media" selected>Media — Avance parcial / alternativa temporal</option>
+              <option value="Baja">Baja — Solicitud programable sin bloqueo</option>
+            </select>
+            <p id="ct-urgency-error" class="hidden text-[11px] text-red-700 mt-1" role="alert"></p>
+          </div>
+
+          <div>
+            <label for="ct-sede" class="block text-xs font-semibold text-slate-800 mb-1.5">Sede UPC <span class="text-red-600">*</span></label>
+            <select id="ct-sede" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-white"></select>
+            <p id="ct-sede-error" class="hidden text-[11px] text-red-700 mt-1" role="alert"></p>
+          </div>
+
+          <div>
+            <label for="ct-location" class="block text-xs font-semibold text-slate-800 mb-1.5">Ubicación / bloque <span class="text-red-600">*</span></label>
+            <select id="ct-location" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-white"></select>
+            <p id="ct-location-error" class="hidden text-[11px] text-red-700 mt-1" role="alert"></p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-dashed border-slate-300 p-4 space-y-2.5 bg-slate-50/70">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/80 text-[#006837] flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" />
+                </svg>
+              </span>
+              <div>
+                <label for="ct-attachments-input" class="block text-xs font-semibold text-slate-800 cursor-pointer">Adjunta una captura o evidencia</label>
+                <p class="text-[11px] text-slate-600">PNG, JPG, WEBP, PDF, DOCX, XLSX · Máximo 5 archivos de 10 MB</p>
+              </div>
+            </div>
+            <label for="ct-attachments-input" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-xs font-semibold text-slate-800 cursor-pointer transition">Seleccionar</label>
+          </div>
+          <input id="ct-attachments-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.docx,.xlsx,.txt,.webm,.ogg,.mp3,.wav,.m4a,.mp4" class="sr-only" />
+          <div id="ct-attachments-preview" class="hidden flex flex-wrap gap-2"></div>
+          <div id="ct-upload-progress-wrap" class="hidden space-y-1">
+            <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+              <div id="ct-upload-progress-bar" class="h-full bg-[#006837] transition-all duration-200" style="width: 0%"></div>
+            </div>
+            <p id="ct-upload-progress-label" class="text-[11px] text-slate-600"></p>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <p class="inline-flex items-center gap-1.5 text-[11px] text-slate-600">
+            <svg class="w-3.5 h-3.5 text-[#006837]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" /></svg>
+            <span>Tus datos se usan solo para atender esta solicitud (Ley 1581).</span>
+          </p>
+          <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-sm font-semibold cursor-pointer transition">
+            <span>Confirmar y radicar</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="lg:col-span-4 space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-5 casagbi-shadow-card space-y-3">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-[#006837] flex items-center justify-center">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+            </span>
+            <span class="text-[11px] font-bold tracking-wider uppercase text-slate-600">ASISTENTE CASAGBI</span>
+          </div>
+          <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#006837]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span><span>Disponible</span>
+          </span>
+        </div>
+        <h3 class="text-base font-bold text-slate-900">¿No sabes por dónde empezar?</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">Describe tu problema y el asistente te ayudará a encontrar una solución o preparar tu solicitud paso a paso.</p>
+        <button id="ct-open-ai-helper-btn" type="button" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#006837] hover:underline cursor-pointer">
+          <span>Hablar con el asistente</span>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+        </button>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-5 casagbi-shadow-card space-y-3">
+        <div class="flex items-center gap-2.5">
+          <span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+          </span>
+          <h3 class="text-sm font-bold text-slate-900">Atención según prioridad</h3>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">Tu nivel de urgencia y el impacto del servicio determinan automáticamente la prioridad y el SLA (matriz OR-03).</p>
+        <div id="ct-or03-live-card" class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-700 space-y-1">
+          <p class="font-semibold text-slate-900">Prioridad estimada: <span id="ct-or03-live-prio" class="text-[#006837]">P3 Media</span></p>
+          <p id="ct-or03-live-sla" class="text-[11px] text-slate-600">Impacto según servicio x Urgencia seleccionada</p>
+        </div>
+        <button id="ct-toggle-sla-table-btn" type="button" aria-expanded="false" aria-controls="ct-sla-table-panel" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#006837] hover:underline cursor-pointer">
+          <span>Conoce los SLA</span>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+        </button>
+        <div id="ct-sla-table-panel" class="hidden pt-2 border-t border-slate-100 text-[11px] text-slate-700 space-y-1.5">
+          <p><strong>P1 Crítica:</strong> Respuesta 0.5 h · Resolución 4 h</p>
+          <p><strong>P2 Alta:</strong> Respuesta 1 h · Resolución 8 h</p>
+          <p><strong>P3 Media:</strong> Respuesta 4 h · Resolución 24 h</p>
+          <p><strong>P4 Baja:</strong> Respuesta 8 h · Resolución 40 h</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>

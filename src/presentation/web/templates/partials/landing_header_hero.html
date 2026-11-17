@@ -1,0 +1,95 @@
+<!-- 1. Cabecera fija institucional con CTA -->
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-[#006837] text-white flex items-center justify-center shadow-xs">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      </div>
+      <div>
+        <span class="font-bold text-slate-900 tracking-tight block leading-none">CASAGBI · UPC</span>
+        <span class="text-[11px] text-slate-600">Mesa de Servicios TIC (ITIL v4)</span>
+      </div>
+    </a>
+
+    <nav aria-label="Navegación del portal público" class="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-700">
+      <a href="#servicios" class="hover:text-[#006837] transition">Servicios y SLA</a>
+      <a href="#como-funciona" class="hover:text-[#006837] transition">Cómo Funciona</a>
+      <a href="#consultar-radicado" class="hover:text-[#006837] transition">Consultar Ticket</a>
+      <a href="#kb-publica" class="hover:text-[#006837] transition">Base de Conocimiento</a>
+      <a href="#faq" class="hover:text-[#006837] transition">FAQ</a>
+      <a href="#sedes-contacto" class="hover:text-[#006837] transition">Sedes</a>
+    </nav>
+
+    <div class="flex items-center gap-2.5">
+      <a href="#consultar-radicado" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition">
+        Consultar Radicado
+      </a>
+      <a id="landing-auth-cta" href="/login" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold shadow-xs transition">
+        Iniciar Sesión Institucional
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- 2. Hero con propuesta de valor, 3 acciones clave y métricas agregadas sin PII -->
+<section class="relative overflow-hidden bg-gradient-to-b from-emerald-50/70 via-white to-slate-50 pt-12 pb-16 border-b border-slate-200/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <div class="lg:col-span-7 space-y-6">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/90 text-[#004d28] text-xs font-semibold border border-emerald-200">
+        <span class="w-2 h-2 rounded-full bg-[#10b981]"></span>
+        Punto Único de Contacto (SPOC) · Universidad Popular del Cesar
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+        Soporte TIC universitario con <span class="text-[#006837]">trazabilidad ITIL v4</span> e IA aplicada.
+      </h1>
+      <p class="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl">
+        Centraliza incidentes y requerimientos en Sabanas, Hurtado y Aguachica. Radicados por categoría técnica, asignación automática por menor carga y soporte multimedia en tiempo real.
+      </p>
+      <div class="flex flex-wrap items-center gap-3 pt-1">
+        <button id="landing-quick-create-btn" type="button" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-sm font-semibold shadow-sm transition cursor-pointer">
+          <span>Reportar Incidente / Solicitud</span>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+          </svg>
+        </button>
+        <a href="#consultar-radicado" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 text-sm font-semibold transition">
+          Consultar Ticket
+        </a>
+        <button id="hero-open-agent-btn" type="button" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-[#004d28] border border-emerald-300 text-sm font-semibold transition cursor-pointer">
+          Hablar con el Asistente IA
+        </button>
+      </div>
+      <p class="text-xs text-slate-600">
+        ¿Eres personal o estudiante registrado?
+        <a id="hero-auth-btn" href="/login" class="font-semibold text-[#006837] hover:underline">Ingresar con cuenta @unicesar.edu.co</a>
+      </p>
+    </div>
+
+    <!-- Métricas agregadas sin datos personales -->
+    <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+      <article class="rounded-2xl bg-white border border-slate-200 p-5 casagbi-shadow-card min-h-[112px]">
+        <p class="text-xs font-medium text-slate-600">Tickets registrados</p>
+        <p id="metric-total-tickets" class="text-3xl font-extrabold text-slate-900 mt-1 tabular-nums">--</p>
+        <p class="text-[11px] text-[#006837] mt-2 font-semibold">Trazabilidad auditada</p>
+      </article>
+      <article class="rounded-2xl bg-white border border-slate-200 p-5 casagbi-shadow-card min-h-[112px]">
+        <p class="text-xs font-medium text-slate-600">Cumplimiento SLA</p>
+        <p id="metric-sla-pct" class="text-3xl font-extrabold text-[#006837] mt-1 tabular-nums">--%</p>
+        <p class="text-[11px] text-slate-600 mt-2">Horarios hábiles OR-04</p>
+      </article>
+      <article class="rounded-2xl bg-white border border-slate-200 p-5 casagbi-shadow-card min-h-[112px]">
+        <p class="text-xs font-medium text-slate-600">Primera respuesta</p>
+        <p id="metric-resp-min" class="text-3xl font-extrabold text-slate-900 mt-1 tabular-nums">-- min</p>
+        <p class="text-[11px] text-slate-600 mt-2">Tiempo medio inicial</p>
+      </article>
+      <article class="rounded-2xl bg-white border border-slate-200 p-5 casagbi-shadow-card min-h-[112px]">
+        <p class="text-xs font-medium text-slate-600">Satisfacción CSAT</p>
+        <p id="metric-csat" class="text-3xl font-extrabold text-slate-900 mt-1 tabular-nums">-- / 5</p>
+        <p class="text-[11px] text-slate-600 mt-2">Evaluado por solicitantes</p>
+      </article>
+    </div>
+  </div>
+</section>

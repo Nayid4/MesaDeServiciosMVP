@@ -1,0 +1,127 @@
+<!-- 6. Asistente IA con Vista Previa -->
+<section id="asistente-ia" class="py-14 bg-white border-b border-slate-200 casagbi-reveal">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div class="lg:col-span-6 space-y-4">
+      <span class="inline-flex px-3 py-1 rounded-full bg-emerald-50 text-[#004d28] border border-emerald-200 text-xs font-semibold">Soporte Nivel 0 · Human-in-the-Loop</span>
+      <h2 class="text-2xl font-bold text-slate-900">Asistente Inteligente CASAGBI con verificación humana</h2>
+      <p class="text-sm text-slate-600 leading-relaxed">
+        Nuestro agente NLP busca primero guías oficiales de autoservicio en la Base de Conocimiento (RAG), consulta radicados autorizados y prepara borradores de tickets que siempre validas antes de radicar. En contingencia RNF-06, el portal mantiene el registro manual activo.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <button type="button" data-open-agent-prompt="No puedo conectar a Wi-Fi Eduroam en mi portátil" class="px-3.5 py-2 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold cursor-pointer">Probar guía Wi-Fi Eduroam</button>
+        <button type="button" data-open-agent-prompt="Necesito restablecer la contraseña de mi correo institucional" class="px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-semibold cursor-pointer">Probar soporte correo</button>
+      </div>
+    </div>
+    <div class="lg:col-span-6">
+      <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-3 casagbi-shadow-card">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          <span class="text-xs font-bold text-[#006837]">Vista previa · Conversación CASAGBI Agent</span>
+          <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-[#004d28] font-semibold">Nivel 0 activo</span>
+        </div>
+        <div class="space-y-2.5 text-xs">
+          <div class="ml-auto max-w-[80%] rounded-2xl rounded-br-sm bg-[#006837] text-white px-3.5 py-2">
+            El proyector del Bloque B en Sabanas no da señal HDMI
+          </div>
+          <div class="max-w-[90%] rounded-2xl rounded-bl-sm bg-white border border-slate-200 text-slate-800 px-3.5 py-2.5 space-y-1.5">
+            <span class="inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-[#006837] border border-emerald-200">Tool: draft_ticket</span>
+            <p>Pre-clasificado para <strong>Aulas Inteligentes y Videoproyectores</strong> (MS-AUL-) · Sede Sabanas · Bloque B. Confirma urgencia antes de enviar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Base de Conocimiento Pública con Buscador (debounce 350 ms) -->
+<section id="kb-publica" class="py-14 bg-slate-50 border-b border-slate-200 casagbi-reveal">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900">Base de Conocimiento Pública (Autoservicio)</h2>
+        <p class="text-sm text-slate-600 mt-1">Resuelve fallas frecuentes al instante con guías verificadas por el equipo TIC.</p>
+      </div>
+      <span id="landing-kb-indicator" aria-live="polite" class="hidden text-xs font-semibold text-[#006837]">Buscando guías...</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-3 bg-white p-4 rounded-2xl border border-slate-200 casagbi-shadow-card">
+      <div class="md:col-span-8">
+        <label for="landing-kb-search" class="sr-only">Buscar en Base de Conocimiento</label>
+        <input id="landing-kb-search" type="search" placeholder="Buscar guía por palabra clave (ej. eduroam, correo, vortal, proyector)..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-[#006837]" />
+      </div>
+      <div class="md:col-span-4">
+        <label for="landing-kb-service" class="sr-only">Filtrar por servicio TIC</label>
+        <select id="landing-kb-service" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs bg-white">
+          <option value="">Todos los servicios TIC</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="landing-kb-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+  </div>
+</section>
+
+<!-- 8. Preguntas Frecuentes (FAQ) en Acordeón Accesible -->
+<section id="faq" class="py-14 bg-white border-b border-slate-200 casagbi-reveal">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <div class="text-center space-y-2">
+      <h2 class="text-2xl font-bold text-slate-900">Preguntas Frecuentes</h2>
+      <p class="text-sm text-slate-600">Dudas habituales sobre radicados, horarios SLA y acceso sin contraseña.</p>
+    </div>
+    <div class="space-y-3">
+      <div class="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
+        <button type="button" data-faq-toggle="faq-panel-1" aria-expanded="false" aria-controls="faq-panel-1" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 text-sm font-bold text-slate-900 hover:bg-slate-100 cursor-pointer">
+          <span>¿Cómo se asigna la prioridad y el tiempo de respuesta de mi ticket?</span>
+          <span class="text-xs font-mono text-[#006837]">OR-03</span>
+        </button>
+        <div id="faq-panel-1" class="hidden px-5 pb-4 text-xs text-slate-700 leading-relaxed">
+          Se calcula automáticamente cruzando el Impacto del servicio en el catálogo oficial con la Urgencia que reportas (P1 Crítica 4 h, P2 Alta 8 h, P3 Media 24 h, P4 Baja 40 h en horario hábil institucional OR-04).
+        </div>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
+        <button type="button" data-faq-toggle="faq-panel-2" aria-expanded="false" aria-controls="faq-panel-2" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 text-sm font-bold text-slate-900 hover:bg-slate-100 cursor-pointer">
+          <span>¿Puedo consultar el chat de mi caso si olvidé mi contraseña o no tengo sesión abierta?</span>
+          <span class="text-xs font-mono text-[#006837]">SCR-02</span>
+        </button>
+        <div id="faq-panel-2" class="hidden px-5 pb-4 text-xs text-slate-700 leading-relaxed">
+          Sí. En la sección Consultar Ticket ingresa el radicado junto con el correo institucional con el que fue creado. El sistema emitirá una sesión temporal de invitado limitada exclusivamente a ese ticket.
+        </div>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
+        <button type="button" data-faq-toggle="faq-panel-3" aria-expanded="false" aria-controls="faq-panel-3" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 text-sm font-bold text-slate-900 hover:bg-slate-100 cursor-pointer">
+          <span>¿Qué archivos o audios puedo adjuntar en el chat?</span>
+          <span class="text-xs font-mono text-[#006837]">SCR-04</span>
+        </button>
+        <div id="faq-panel-3" class="hidden px-5 pb-4 text-xs text-slate-700 leading-relaxed">
+          Puedes enviar imágenes (JPG, PNG, WEBP), documentos (PDF, DOCX, XLSX, TXT) y notas de voz (WEBM, OGG, MP3, WAV, M4A) hasta 5 archivos de máximo 10 MB por mensaje. No se admiten ZIP, SVG ni ejecutables.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Sedes y Contacto Institucional [CONFIRMAR] + Pie de Privacidad Ley 1581 -->
+<section id="sedes-contacto" class="py-14 bg-slate-50 casagbi-reveal">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <div>
+      <h2 class="text-2xl font-bold text-slate-900">Sedes atendidas y canales institucionales</h2>
+      <p class="text-xs text-slate-600 mt-1">Horarios hábiles OR-04: lunes a viernes 08:00-12:00 / 14:00-18:00 y sábados 08:00-12:00 (zona America/Bogota).</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+      <article class="rounded-2xl bg-white border border-slate-200 p-5 space-y-1.5 casagbi-shadow-card">
+        <h3 class="text-sm font-bold text-slate-900">Sede Sabanas (Valledupar)</h3>
+        <p class="text-slate-700">Balneario Hurtado vía a Patillal / Campus Sabanas</p>
+        <p class="text-slate-600">Punto TIC: Bloque Administrativo [CONFIRMAR oficina/extensión]</p>
+      </article>
+      <article class="rounded-2xl bg-white border border-slate-200 p-5 space-y-1.5 casagbi-shadow-card">
+        <h3 class="text-sm font-bold text-slate-900">Sede Hurtado (Valledupar)</h3>
+        <p class="text-slate-700">Sede Principal Administrativa y Bienestar</p>
+        <p class="text-slate-600">Mesa de Ayuda: Piso 1 [CONFIRMAR correo oficial/teléfono]</p>
+      </article>
+      <article class="rounded-2xl bg-white border border-slate-200 p-5 space-y-1.5 casagbi-shadow-card">
+        <h3 class="text-sm font-bold text-slate-900">Seccional Aguachica</h3>
+        <p class="text-slate-700">Campus Seccional Sur del Cesar</p>
+        <p class="text-slate-600">Soporte en Campo: Laboratorios TIC [CONFIRMAR extensión]</p>
+      </article>
+    </div>
+  </div>
+</section>

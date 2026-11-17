@@ -1,25 +1,30 @@
-"""Bootstrap idempotente del sistema CASAGBI (Dataset -> Limpieza -> Modelos ML -> SQLite)."""
+"""Bootstrap idempotente del sistema CASAGBI (Dataset 18k -> Limpieza -> Modelos ML -> SQLite)."""
 
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Optional
 
-from src.cleaning import DEFAULT_CLEAN_PATH, DEFAULT_EXCLUDED_PATH, clean_tickets_dataset
-from src.infrastructure.database import init_database
-from src.infrastructure.dataset_generator import DEFAULT_RAW_PATH, generate_synthetic_dataset
-from src.infrastructure.ml_pipeline import DEFAULT_REGISTRY_PATH, train_and_evaluate_models
+from src.infrastructure.ml.cleaning_pipeline import (
+    DEFAULT_CLEAN_PATH,
+    DEFAULT_EXCLUDED_PATH,
+    DEFAULT_RAW_PATH,
+    clean_tickets_dataset,
+)
+from src.infrastructure.ml.dataset_generator import generate_synthetic_dataset
+from src.infrastructure.ml.model_trainer import (
+    DEFAULT_REGISTRY_PATH,
+    load_model_registry,
+    train_and_evaluate_models,
+)
+from src.infrastructure.persistence.database import init_database
 
 
 def ensure_system_bootstrapped(
     db_path: Optional[str | Path] = None,
     n_rows: int = 18000,
 ) -> dict:
-    """
-    Asegura que existan el dataset sintético crudo, los datasets procesados,
-    los modelos entrenados (.joblib + model_registry.json) y la base de datos SQLite
-    con su seeder inicial. Idempotente para entorno local y contenedores Docker.
-    """
+    """Garantiza datasets, artefactos .joblib del registro y base SQLite inicializada."""
     actions_executed = []
 
     raw_path = Path(DEFAULT_RAW_PATH)
@@ -39,7 +44,18 @@ def ensure_system_bootstrapped(
         )
         actions_executed.append("dataset_cleaned")
 
-    if not registry_path.exists():
+    needs_training = not registry_path.exists()
+    if not needs_training:
+        reg = load_model_registry(registry_path)
+        if not reg:
+            needs_training = True
+        else:
+            active_id = reg.get("active_model_id")
+            active_meta = next((m for m in reg.get("models", []) if m["model_id"] == active_id), None)
+            if not active_meta or not Path(active_meta["artifact_path"]).exists():
+                needs_training = True
+
+    if needs_training:
         train_and_evaluate_models(clean_csv_path=clean_path, models_dir=registry_path.parent)
         actions_executed.append("models_trained")
 

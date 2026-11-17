@@ -1,0 +1,51 @@
+"""Fachada de compatibilidad para modelos declarativos SQLAlchemy 2.0."""
+
+from __future__ import annotations
+
+from src.infrastructure.persistence.models import (
+    AuditLogORM,
+    Base,
+    GuestOtpChallengeORM,
+    IdempotencyKeyORM,
+    KnowledgeArticleORM,
+    KnowledgeArticleVersionORM,
+    MessageVersionORM,
+    NotificationORM,
+    PasswordResetTokenORM,
+    PublicLookupAttemptORM,
+    RefreshTokenORM,
+    SLAConfigORM,
+    ServiceCatalogORM,
+    TicketAttachmentORM,
+    TicketAuditEventORM,
+    TicketCounterORM,
+    TicketMessageORM,
+    TicketORM,
+    UserNotificationPreferenceORM,
+    UserORM,
+    WsConnectionTicketORM,
+)
+
+__all__ = [
+    "AuditLogORM",
+    "Base",
+    "GuestOtpChallengeORM",
+    "IdempotencyKeyORM",
+    "KnowledgeArticleORM",
+    "KnowledgeArticleVersionORM",
+    "MessageVersionORM",
+    "NotificationORM",
+    "PasswordResetTokenORM",
+    "PublicLookupAttemptORM",
+    "RefreshTokenORM",
+    "SLAConfigORM",
+    "ServiceCatalogORM",
+    "TicketAttachmentORM",
+    "TicketAuditEventORM",
+    "TicketCounterORM",
+    "TicketMessageORM",
+    "TicketORM",
+    "UserNotificationPreferenceORM",
+    "UserORM",
+    "WsConnectionTicketORM",
+]

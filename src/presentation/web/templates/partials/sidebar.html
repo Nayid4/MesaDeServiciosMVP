@@ -1,0 +1,59 @@
+<!-- Sidebar Azul Marino (#0D1522) -->
+<aside id="workspace-sidebar" aria-label="Menú principal del workspace" class="fixed inset-y-0 left-0 z-50 -translate-x-full md:sticky md:top-0 md:h-screen md:translate-x-0 w-64 bg-[#0D1522] text-slate-300 flex flex-col shrink-0 transition-all duration-200 border-r border-slate-800/80">
+  <div class="h-16 px-4 flex items-center justify-between border-b border-white/10 shrink-0">
+    <a href="/" class="flex items-center gap-3 overflow-hidden">
+      <div class="w-9 h-9 rounded-xl bg-[#007A3D] text-white flex items-center justify-center shrink-0 shadow-xs">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      </div>
+      <div class="sidebar-label truncate">
+        <p class="text-sm font-bold text-white leading-none tracking-tight">CASAGBI <span class="font-normal text-slate-300">· UPC</span></p>
+        <p class="text-[10px] tracking-wider uppercase text-slate-300 mt-1">MESA DE SERVICIOS <span class="text-[#34d399] font-semibold">ITIL v4</span></p>
+      </div>
+    </a>
+    <button id="toggle-sidebar-btn" type="button" aria-label="Colapsar menú lateral" aria-expanded="true" title="Colapsar barra" class="hidden md:inline-flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 cursor-pointer transition">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="sidebar-nav" aria-label="Navegación por rol RBAC" class="flex-1 px-3 py-4 space-y-1 overflow-y-auto thin-scroll"></nav>
+
+  <div class="p-3 space-y-3 border-t border-white/10 shrink-0">
+    <button id="sidebar-help-btn" type="button" class="sidebar-label w-full rounded-xl bg-[#131E30] border border-white/10 hover:border-emerald-400/40 p-3 flex items-center gap-3 text-left transition cursor-pointer">
+      <span class="w-8 h-8 rounded-lg bg-[#006837]/25 text-[#34d399] flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" />
+          <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" /><line x1="14.83" y1="14.83" x2="19.07" y2="19.07" />
+          <line x1="14.83" y1="9.17" x2="19.07" y2="4.93" /><line x1="4.93" y1="19.07" x2="9.17" y2="14.83" />
+        </svg>
+      </span>
+      <span class="min-w-0 flex-1">
+        <span class="block text-xs font-semibold text-white truncate">¿Necesitas ayuda?</span>
+        <span class="block text-[11px] text-slate-300 truncate">Consulta la guía de soporte</span>
+      </span>
+      <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+      </svg>
+    </button>
+
+    <div class="flex items-center gap-2.5 px-1.5 pt-1">
+      <button id="sidebar-profile-btn" type="button" title="Mi perfil y seguridad" class="flex items-center gap-2.5 min-w-0 flex-1 text-left hover:opacity-90 cursor-pointer">
+        <div id="sidebar-user-initials" class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-[#6ee7b7] text-xs font-bold flex items-center justify-center shrink-0">UP</div>
+        <div class="sidebar-label min-w-0 flex-1">
+          <p id="sidebar-user-name" class="text-xs font-semibold text-white truncate">--</p>
+          <p id="sidebar-user-area" class="text-[11px] text-slate-300 truncate">--</p>
+          <p id="sidebar-user-email" class="sr-only">--</p>
+        </div>
+      </button>
+      <a href="/" title="Portal público CASAGBI" aria-label="Ir al portal público" class="sidebar-label p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition shrink-0">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</aside>

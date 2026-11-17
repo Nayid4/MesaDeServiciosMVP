@@ -1,0 +1,190 @@
+<!-- VISTA 1: RESUMEN / KPIs E INFORMES -->
+<section id="view-kpis" class="hidden max-w-7xl mx-auto space-y-6">
+  <div class="flex flex-wrap items-start justify-between gap-4">
+    <div class="space-y-1">
+      <p class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#006837]">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+        <span>OPERACIONES · ITIL v4</span>
+      </p>
+      <h1 id="resumen-greeting" class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Hola</h1>
+      <p id="resumen-date-subtitle" class="text-xs sm:text-sm text-slate-600">Estado actual de la mesa de servicios TIC.</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <button id="resumen-create-btn" type="button" class="hidden inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs sm:text-sm font-semibold shadow-xs transition cursor-pointer">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M12 18v-6" /><path d="M9 15h6" />
+        </svg>
+        <span>Crear ticket</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Banner de estado operativo -->
+  <div id="resumen-status-banner" class="rounded-2xl border border-emerald-200/80 bg-[#F1F8F4] px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-white border border-emerald-200/80 text-[#006837] flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>
+      </div>
+      <div>
+        <p id="resumen-status-title" class="text-sm font-bold text-slate-900">La operación está bajo control</p>
+        <p id="resumen-status-detail" class="text-xs text-slate-600">Cargando métricas reales del alcance operativo...</p>
+      </div>
+    </div>
+    <div class="inline-flex items-center gap-2 text-xs font-medium text-[#006837]">
+      <span class="w-2 h-2 rounded-full bg-[#10b981]"></span>
+      <span id="resumen-updated-label">Sincronizado en tiempo real</span>
+    </div>
+  </div>
+
+  <!-- Filtros y exportación RIU-10 -->
+  <div class="bg-white rounded-2xl border border-slate-200/80 p-3.5 casagbi-shadow-card flex flex-wrap gap-2.5 items-center justify-between">
+    <div class="flex flex-wrap gap-2 items-center">
+      <span id="kpi-scope-badge" class="px-2.5 py-1 rounded-full bg-emerald-50 text-[#004d28] border border-emerald-200 text-[11px] font-semibold">Alcance operativo</span>
+      <select id="kpi-filter-sede" aria-label="Filtrar KPI por sede" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs bg-white text-slate-700"><option value="">Todas las sedes</option></select>
+      <select id="kpi-filter-service" aria-label="Filtrar KPI por servicio" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs bg-white text-slate-700"><option value="">Todos los servicios</option></select>
+      <select id="kpi-filter-priority" aria-label="Filtrar KPI por prioridad" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs bg-white text-slate-700"><option value="">Todas las prioridades</option></select>
+      <button id="kpi-refresh-btn" type="button" class="px-3.5 py-1.5 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold cursor-pointer transition">Aplicar filtros</button>
+    </div>
+    <div class="flex flex-wrap gap-2 items-center">
+      <button id="kpi-export-csv-btn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold cursor-pointer transition">
+        <span>Exportar CSV (RIU-10)</span>
+      </button>
+      <button id="kpi-export-pdf-btn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0D1522] hover:bg-slate-800 text-white text-xs font-semibold cursor-pointer transition">
+        <span>Exportar PDF (RIU-10)</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="kpi-cards-grid" aria-live="polite" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"></div>
+
+  <!-- Volumen de atención + Trabajo pendiente por prioridad -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+    <div class="xl:col-span-8 bg-white rounded-2xl border border-slate-200/80 p-5 casagbi-shadow-card flex flex-col justify-between space-y-4">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p class="text-[11px] font-bold tracking-wider uppercase text-slate-600">VOLUMEN DE ATENCIÓN</p>
+          <h2 class="text-base font-bold text-slate-900">Tickets recibidos y resueltos por servicio</h2>
+          <p class="text-xs text-slate-600">Demanda y resolución reales según los filtros activos</p>
+        </div>
+        <div class="flex items-center gap-4 text-xs">
+          <span class="inline-flex items-center gap-1.5 text-slate-700 font-medium">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#006837]"></span>
+            <span>Recibidos <strong id="resumen-legend-received" class="text-slate-900 tabular-nums">0</strong></span>
+          </span>
+          <span class="inline-flex items-center gap-1.5 text-slate-700 font-medium">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#6ee7b7]"></span>
+            <span>Resueltos <strong id="resumen-legend-resolved" class="text-slate-900 tabular-nums">0</strong></span>
+          </span>
+        </div>
+      </div>
+
+      <div class="h-60 relative">
+        <canvas id="chart-by-service" aria-label="Gráfico de volumen de tickets por servicio TIC"></canvas>
+      </div>
+
+      <div class="overflow-x-auto border-t border-slate-100 pt-3">
+        <table class="w-full text-left text-xs">
+          <caption class="text-left text-[11px] font-semibold text-slate-600 mb-1.5">Tabla equivalente: distribución de tickets por servicio</caption>
+          <thead class="bg-slate-50 text-slate-600 text-[11px] uppercase">
+            <tr>
+              <th scope="col" class="px-3 py-2">Servicio</th>
+              <th scope="col" class="px-3 py-2 text-right">Cantidad</th>
+              <th scope="col" class="px-3 py-2 text-right">%</th>
+            </tr>
+          </thead>
+          <tbody id="table-by-service-body" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/80 p-5 casagbi-shadow-card flex flex-col justify-between space-y-4">
+      <div class="space-y-4">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <p class="text-[11px] font-bold tracking-wider uppercase text-slate-600">TRABAJO PENDIENTE</p>
+            <h2 class="text-base font-bold text-slate-900">Tickets por prioridad</h2>
+            <p id="resumen-pending-subtitle" class="text-xs text-slate-600">0 casos necesitan atención</p>
+          </div>
+          <button id="resumen-priority-queue-link" type="button" class="inline-flex items-center gap-1 text-xs font-semibold text-[#006837] hover:underline cursor-pointer shrink-0">
+            <span>Ver cola de tickets</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+          </button>
+        </div>
+        <div id="resumen-priority-bars" class="space-y-3.5 pt-1"></div>
+      </div>
+
+      <button id="resumen-sla-alert-btn" type="button" class="w-full text-left rounded-xl border border-amber-200 bg-amber-50/80 hover:bg-amber-100/70 p-3.5 flex items-center justify-between gap-3 transition cursor-pointer">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-white border border-amber-200 text-amber-700 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div>
+            <p id="resumen-sla-alert-title" class="text-xs font-bold text-amber-950">0 SLA en riesgo</p>
+            <p class="text-[11px] text-amber-800">Revisa los casos próximos a vencer</p>
+          </div>
+        </div>
+        <svg class="w-4 h-4 text-amber-700 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Actividad reciente + Carga por técnico -->
+  <div class="bg-white rounded-2xl border border-slate-200/80 casagbi-shadow-card overflow-hidden">
+    <div class="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="text-[11px] font-bold tracking-wider uppercase text-slate-600">ACTIVIDAD RECIENTE</p>
+        <h2 class="text-base font-bold text-slate-900">Tickets que requieren atención</h2>
+      </div>
+      <button id="resumen-view-all-tickets-btn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition cursor-pointer">
+        <span>Ver todos</span>
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+      </button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 uppercase text-[11px]">
+          <tr>
+            <th scope="col" class="px-5 py-3">Radicado</th>
+            <th scope="col" class="px-5 py-3">Asunto y servicio</th>
+            <th scope="col" class="px-5 py-3">Solicitante</th>
+            <th scope="col" class="px-5 py-3">Prioridad</th>
+            <th scope="col" class="px-5 py-3">Estado</th>
+            <th scope="col" class="px-5 py-3">SLA</th>
+            <th scope="col" class="px-5 py-3">Técnico</th>
+          </tr>
+        </thead>
+        <tbody id="resumen-recent-tickets-tbody" class="divide-y divide-slate-100"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-slate-200/80 p-5 casagbi-shadow-card space-y-4">
+    <div>
+      <p class="text-[11px] font-bold tracking-wider uppercase text-slate-600">CAPACIDAD OPERATIVA</p>
+      <h2 class="text-base font-bold text-slate-900">Carga de tickets abiertos por técnico</h2>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+      <div class="lg:col-span-5 h-52 relative">
+        <canvas id="chart-tech-workload" aria-label="Gráfico de carga de tickets abiertos por técnico"></canvas>
+      </div>
+      <div class="lg:col-span-7 overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <caption class="text-left text-[11px] font-semibold text-slate-600 mb-1.5">Tabla equivalente: tickets abiertos y resueltos por técnico</caption>
+          <thead class="bg-slate-50 text-slate-600 text-[11px] uppercase">
+            <tr>
+              <th scope="col" class="px-3 py-2">Técnico</th>
+              <th scope="col" class="px-3 py-2">Área</th>
+              <th scope="col" class="px-3 py-2 text-right">Abiertos</th>
+              <th scope="col" class="px-3 py-2 text-right">Resueltos</th>
+            </tr>
+          </thead>
+          <tbody id="table-tech-workload-body" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

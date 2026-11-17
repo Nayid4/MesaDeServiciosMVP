@@ -1,0 +1,95 @@
+/* Estilos base, animaciones performantes (transform/opacity) y accesibilidad — CASAGBI UPC */
+
+@layer utilities {
+  .casagbi-shadow-card {
+    box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.03);
+  }
+  .casagbi-shadow-float {
+    box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.22), 0 8px 18px -6px rgba(0, 104, 55, 0.22);
+  }
+  .casagbi-kb-orbit {
+    background-image:
+      radial-gradient(circle at 78% 50%, rgba(16, 185, 129, 0.08) 0%, rgba(240, 250, 244, 0) 62%),
+      linear-gradient(135deg, #f3faf5 0%, #eff8f2 100%);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Foco visible consistente WCAG 2.1 AA */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #006837;
+  outline-offset: 2px;
+}
+
+/* Animaciones GPU-safe (solo transform y opacity, 150-300 ms) */
+.casagbi-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1), transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.casagbi-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes casagbiMsgIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.casagbi-msg-enter {
+  animation: casagbiMsgIn 180ms ease-out both;
+}
+
+/* Esqueletos de carga con reserva de espacio estable (CLS < 0,1) */
+@keyframes casagbiSkeletonPulse {
+  0%, 100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+.casagbi-skeleton {
+  background-color: #e2e8f0;
+  animation: casagbiSkeletonPulse 1.4s ease-in-out infinite;
+}
+
+/* Respeto estricto a prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .casagbi-reveal,
+  .casagbi-msg-enter,
+  .casagbi-skeleton {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Barras de desplazamiento discretas */
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.35);
+  border-radius: 9999px;
+}
+.thin-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.6);
+}

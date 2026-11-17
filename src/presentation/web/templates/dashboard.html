@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block head_extra %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex bg-[#F6F8FA] relative">
+  <div id="mobile-drawer-backdrop" class="hidden fixed inset-0 z-40 bg-slate-950/60 md:hidden"></div>
+  {% include "partials/sidebar.html" %}
+  <div class="flex-1 flex flex-col min-w-0">
+    {% include "partials/topbar.html" %}
+    <main id="main-content" class="flex-1 p-4 sm:p-7 overflow-y-auto space-y-6">
+      {% include "partials/view_kpis.html" %}
+      {% include "partials/view_tickets.html" %}
+      {% include "partials/view_create_ticket.html" %}
+      {% include "partials/view_kb.html" %}
+      {% include "partials/view_teams_audit_ml.html" %}
+      {% include "partials/view_profile.html" %}
+    </main>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/features/analytics_home/components/analytics_charts.js"></script>
+<script src="/static/js/features/analytics_home/analytics_home_view.js"></script>
+<script src="/static/js/features/analytics_home/analytics_home_container.js"></script>
+<script src="/static/js/features/ml_laboratory/ml_laboratory_view.js"></script>
+<script src="/static/js/features/ml_laboratory/ml_laboratory_container.js"></script>
+<script src="/static/js/features/knowledge_base/components/kb_inspector_view.js"></script>
+<script src="/static/js/features/knowledge_base/knowledge_base_view.js"></script>
+<script src="/static/js/features/knowledge_base/services/kb_editor_controller.js"></script>
+<script src="/static/js/features/knowledge_base/knowledge_base_container.js"></script>
+<script src="/static/js/features/ticket_chat_ws.js"></script>
+<script src="/static/js/features/chat/chat_view.js"></script>
+<script src="/static/js/features/chat/services/audio_recorder.js"></script>
+<script src="/static/js/features/chat/chat_container.js"></script>
+<script src="/static/js/features/tickets/components/ticket_detail_view.js"></script>
+<script src="/static/js/features/tickets/components/ticket_modals_view.js"></script>
+<script src="/static/js/features/tickets/tickets_view.js"></script>
+<script src="/static/js/features/tickets/services/ticket_create_controller.js"></script>
+<script src="/static/js/features/tickets/services/ticket_actions_controller.js"></script>
+<script src="/static/js/features/tickets/tickets_container.js"></script>
+<script src="/static/js/features/users/profile_and_users_controller.js"></script>
+<script src="/static/js/features/dashboard_shell_helpers.js"></script>
+<script src="/static/js/features/admin_dashboard.js"></script>
+{% endblock %}

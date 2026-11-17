@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CASAGBI · Mesa de Servicios TIC de la Universidad Popular del Cesar basada en ITIL v4, matriz de priorización OR-03, soporte nivel 0 con IA y chat en tiempo real." />
+  <meta name="theme-color" content="#006837" />
+  <title>{{ page_title | default("CASAGBI · Mesa de Servicios TIC UPC") }}</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      /* Colores institucionales UPC + semánticos WCAG AA */
+      --color-upc-primary: #006837;
+      --color-upc-dark: #004d28;
+      --color-upc-accent: #10b981;
+      --color-upc-surface: #f6f8fa;
+      --color-upc-navy: #0d1522;
+      --color-upc-slate: #0f172a;
+      --color-upc-border: #e5e7eb;
+      --color-upc-danger: #b91c1c;
+      --color-upc-warning: #b45309;
+      --color-upc-info: #1d4ed8;
+
+      /* Tipografía */
+      --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      /* Rejilla de 8 px */
+      --spacing-grid-1: 0.5rem;
+      --spacing-grid-2: 1rem;
+      --spacing-grid-3: 1.5rem;
+      --spacing-grid-4: 2rem;
+
+      /* Radios y sombras */
+      --radius-card: 1rem;
+      --radius-control: 0.75rem;
+      --shadow-card: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+      --shadow-float: 0 20px 40px -12px rgba(15, 23, 42, 0.22);
+
+      /* Duraciones */
+      --duration-fast: 150ms;
+      --duration-base: 240ms;
+      --duration-slow: 300ms;
+    }
+  </style>
+  <link rel="stylesheet" href="/static/css/input.css" />
+  <link rel="stylesheet" href="/static/css/app.css" />
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-[#F6F8FA] text-slate-900 font-sans antialiased selection:bg-emerald-100 selection:text-emerald-900">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-xl focus:bg-[#006837] focus:text-white focus:text-xs focus:font-semibold">
+    Saltar al contenido principal
+  </a>
+
+  {% block content %}{% endblock %}
+
+  <!-- Host global de alertas y errores RFC 7807 Problem Details -->
+  <div id="casagbi-toast-container" aria-live="polite" aria-atomic="true" class="fixed top-5 right-5 z-[70] flex flex-col gap-2 w-80 max-w-[calc(100vw-2rem)] pointer-events-none"></div>
+
+  <!-- Widget Flotante Global de Asistente CASAGBI (Esquina inferior derecha) -->
+  <div id="floating-ai-root" class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+    <div id="floating-ai-panel" role="region" aria-label="Asistente CASAGBI" class="hidden w-[380px] sm:w-[400px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[82vh] bg-white border border-slate-200 rounded-2xl casagbi-shadow-float flex flex-col overflow-hidden">
+      <div class="bg-[#006837] text-white px-5 py-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-base font-bold leading-tight tracking-tight">Asistente CASAGBI</p>
+            <p class="text-xs text-emerald-100 flex items-center gap-1.5 mt-0.5">
+              <span class="w-2 h-2 rounded-full bg-[#34d399] inline-block"></span>
+              <span>Soporte TIC · Nivel 0</span>
+            </p>
+          </div>
+        </div>
+        <button id="floating-ai-close" type="button" aria-label="Minimizar asistente" title="Cerrar asistente" class="p-1.5 rounded-lg text-white/85 hover:text-white hover:bg-white/15 transition cursor-pointer">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="px-4 py-2 bg-slate-50 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-2 text-[11px] shrink-0">
+        <label class="inline-flex items-center gap-1.5 text-slate-600 cursor-pointer select-none">
+          <input id="floating-ai-sim-failure" type="checkbox" class="rounded border-slate-300 text-[#006837] focus:ring-[#006837]" />
+          <span>Simular fallo IA (RNF-06)</span>
+        </label>
+        <div class="flex items-center gap-2">
+          <button id="floating-ai-human-btn" type="button" class="px-2.5 py-1 rounded-lg border border-[#006837]/30 bg-white text-[#006837] hover:bg-emerald-50 font-semibold transition cursor-pointer">Hablar con una persona</button>
+          <button id="floating-ai-clear" type="button" class="text-slate-600 hover:text-slate-900 font-medium cursor-pointer">Limpiar</button>
+        </div>
+      </div>
+
+      <div id="floating-ai-messages" aria-live="polite" class="flex-1 overflow-y-auto thin-scroll p-4 space-y-3 bg-[#FAFBFD]"></div>
+
+      <form id="floating-ai-form" class="p-3.5 bg-white border-t border-slate-200/80 flex items-center gap-2.5 shrink-0">
+        <input
+          id="floating-ai-input"
+          type="text"
+          aria-label="Consulta para el Asistente CASAGBI"
+          placeholder="Escribe tu consulta..."
+          class="flex-1 text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#006837]/25 focus:border-[#006837]"
+        />
+        <button id="floating-ai-send-btn" type="submit" title="Enviar consulta" aria-label="Enviar consulta IA" class="w-10 h-10 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white flex items-center justify-center transition shrink-0 cursor-pointer disabled:opacity-60">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <button
+      id="floating-ai-toggle"
+      type="button"
+      aria-label="CASAGBI ASISTENTE"
+      class="group flex items-center gap-2.5 pl-3 pr-4 py-2 rounded-full bg-[#006837] hover:bg-[#00522b] text-white casagbi-shadow-float transition-all duration-200 cursor-pointer"
+    >
+      <span class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          <line x1="8" y1="10" x2="16" y2="10" />
+          <line x1="8" y1="14" x2="13" y2="14" />
+        </svg>
+      </span>
+      <span class="text-left leading-none">
+        <span class="block text-xs font-extrabold tracking-wide">CASAGBI</span>
+        <span class="block text-[9px] font-semibold tracking-wider text-emerald-100 uppercase mt-0.5">ASISTENTE</span>
+      </span>
+      <span class="relative flex h-2.5 w-2.5 ml-0.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#34d399]"></span>
+      </span>
+    </button>
+  </div>
+
+  <!-- Núcleo Screaming Architecture -->
+  <script src="/static/js/core/utils.js"></script>
+  <script src="/static/js/core/reactive_store.js"></script>
+  <script src="/static/js/core/auth_store.js"></script>
+  <script src="/static/js/shared/icons.js"></script>
+  <script src="/static/js/shared/skeleton_loader.js"></script>
+  <script src="/static/js/shared/skeleton.js"></script>
+  <script src="/static/js/shared/pagination_bar.js"></script>
+  <script src="/static/js/shared/toast.js"></script>
+  <script src="/static/js/shared/modal.js"></script>
+  <script src="/static/js/shared/empty_error_state.js"></script>
+  <script src="/static/js/core/api_client.js"></script>
+  <script src="/static/js/core/router.js"></script>
+  <script src="/static/js/features/ai_agent/components/ai_draft_card.js"></script>
+  <script src="/static/js/features/ai_agent/ai_agent_view.js"></script>
+  <script src="/static/js/features/ai_agent/ai_agent_container.js"></script>
+  <script src="/static/js/features/floating_ai_agent.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

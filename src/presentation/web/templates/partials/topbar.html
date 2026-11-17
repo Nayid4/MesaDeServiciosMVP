@@ -1,0 +1,77 @@
+<!-- Topbar institucional -->
+<header class="sticky top-0 z-30 h-16 bg-white border-b border-slate-200/80 px-4 sm:px-7 flex items-center justify-between gap-4 shrink-0">
+  <div class="flex items-center gap-2.5 text-xs text-slate-600 min-w-0">
+    <button id="mobile-menu-btn" type="button" aria-label="Abrir menú lateral" aria-expanded="false" aria-controls="workspace-sidebar" class="md:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer shrink-0">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 6h16" /><path d="M4 12h16" /><path d="M4 18h16" />
+      </svg>
+    </button>
+    <span class="hidden sm:inline text-slate-600 font-medium">Workspace</span>
+    <span class="hidden sm:inline text-slate-600" aria-hidden="true">/</span>
+    <span id="topbar-breadcrumb" class="font-bold text-slate-900 text-sm truncate">Resumen</span>
+  </div>
+
+  <div class="flex items-center gap-2.5 shrink-0">
+    <span class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-[#006837] border border-emerald-200/80">
+      <span class="w-2 h-2 rounded-full bg-[#10b981]"></span>
+      <span>Servicio operativo</span>
+    </span>
+
+    <div class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100/90 text-slate-700 border border-slate-200/80">
+      <svg class="w-3.5 h-3.5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M5 12.55a11 11 0 0 1 14.08 0" /><path d="M1.42 9a16 16 0 0 1 21.16 0" /><path d="M8.53 16.11a6 6 0 0 1 6.95 0" /><line x1="12" y1="20" x2="12.01" y2="20" />
+      </svg>
+      <span id="topbar-sede-badge">UPC</span>
+    </div>
+
+    <!-- Campana de notificaciones -->
+    <div class="relative">
+      <button id="notif-bell-btn" type="button" aria-label="Notificaciones" title="Notificaciones" class="relative p-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 cursor-pointer transition">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+        </svg>
+        <span id="notif-badge" class="hidden absolute -top-1 -right-1 px-1.5 py-0.2 rounded-full bg-red-700 text-white text-[10px] font-bold">0</span>
+      </button>
+      <div id="notif-dropdown" class="hidden absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-slate-200 rounded-2xl shadow-xl p-3.5 z-50 space-y-2.5">
+        <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100">
+          <span class="text-xs font-bold text-slate-900">Notificaciones</span>
+          <div class="flex items-center gap-2.5">
+            <button id="notif-prefs-toggle-btn" type="button" class="text-[11px] text-slate-700 font-semibold hover:underline cursor-pointer">Preferencias</button>
+            <button id="notif-read-all-btn" type="button" class="text-[11px] text-[#006837] font-semibold hover:underline cursor-pointer">Marcar leídas</button>
+          </div>
+        </div>
+        <div id="notif-prefs-panel" class="hidden p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-[11px] text-slate-700">
+          <p class="font-bold text-slate-800">Preferencias de notificación</p>
+          <label class="flex items-center gap-2 cursor-pointer"><input id="pref-in-app" type="checkbox" checked class="rounded border-slate-300 text-[#006837]" /> <span>Alertas en la plataforma (campana)</span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input id="pref-ticket-updates" type="checkbox" checked class="rounded border-slate-300 text-[#006837]" /> <span>Cambios de estado y prioridad</span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input id="pref-chat-messages" type="checkbox" checked class="rounded border-slate-300 text-[#006837]" /> <span>Mensajes nuevos en chat de ticket</span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input id="pref-sla-alerts" type="checkbox" checked class="rounded border-slate-300 text-[#006837]" /> <span>Alertas de riesgo SLA (75 %)</span></label>
+          <label class="flex items-center gap-2 cursor-pointer"><input id="pref-email-sim" type="checkbox" checked class="rounded border-slate-300 text-[#006837]" /> <span>Resumen institucional por correo</span></label>
+          <div class="flex justify-end pt-1">
+            <button id="notif-prefs-save-btn" type="button" class="px-3 py-1 rounded-lg bg-[#006837] text-white font-semibold cursor-pointer">Guardar preferencias</button>
+          </div>
+        </div>
+        <div id="notif-list" class="max-h-64 overflow-y-auto thin-scroll space-y-2 text-xs"></div>
+      </div>
+    </div>
+
+    <!-- Perfil topbar -->
+    <button id="topbar-profile-btn" type="button" title="Abrir mi perfil" class="hidden sm:flex items-center gap-2.5 pl-2 pr-2 py-1 rounded-xl border border-transparent hover:border-slate-200 hover:bg-slate-50 transition cursor-pointer text-left">
+      <div id="topbar-user-initials" class="w-8 h-8 rounded-full bg-emerald-100 text-[#006837] text-xs font-bold flex items-center justify-center shrink-0">UP</div>
+      <div class="leading-tight">
+        <p id="topbar-user-name" class="text-xs font-semibold text-slate-900 truncate max-w-[130px]">--</p>
+        <p id="topbar-role-badge" class="text-[11px] text-slate-600 truncate max-w-[130px]">--</p>
+      </div>
+    </button>
+
+    <button id="logout-btn" type="button" aria-label="Cerrar sesión" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-red-50 hover:text-red-800 hover:border-red-200 text-xs font-semibold text-slate-700 transition cursor-pointer">
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+        <polyline points="16 17 21 12 16 7" />
+        <line x1="21" x2="9" y1="12" y2="12" />
+      </svg>
+      <span class="hidden sm:inline">Cerrar sesión</span>
+    </button>
+  </div>
+</header>

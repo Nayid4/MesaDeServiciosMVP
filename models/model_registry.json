@@ -1,13 +1,13 @@
 {
-  "trained_at": "2026-11-14T18:14:59.492382+00:00",
+  "trained_at": "2026-11-17T06:20:53.843177+00:00",
   "dataset_rows": 17658,
   "train_rows": 14126,
   "test_rows": 3532,
   "cv_folds": 5,
-  "active_model_id": "multinomial_nb",
-  "urgency_model_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/urgency_classifier.joblib",
-  "urgency_f1_macro": 0.9664,
-  "f1_gain_vs_baseline_pct": 19.49,
+  "active_model_id": "linear_svc",
+  "urgency_model_path": "models/urgency_classifier.joblib",
+  "urgency_f1_macro": 0.9624,
+  "f1_gain_vs_baseline_pct": 8.61,
   "labels": [
     "Aulas Inteligentes y Videoproyectores",
     "Conectividad y Redes Wi-Fi",
@@ -19,374 +19,374 @@
   "top_keywords_per_service": {
     "Aulas Inteligentes y Videoproyectores": [
       {
-        "term": "del aula",
-        "weight": 2.1587
+        "term": "hdmi",
+        "weight": 3.0647
+      },
+      {
+        "term": "proyector",
+        "weight": 3.0358
       },
       {
         "term": "videoproyector",
-        "weight": 2.0097
+        "weight": 2.9955
       },
       {
-        "term": "pantalla",
-        "weight": 1.8668
+        "term": "proyector hdmi",
+        "weight": 2.2281
+      },
+      {
+        "term": "hdmi aula_inteligente",
+        "weight": 2.2281
+      },
+      {
+        "term": "videoproyector proyector",
+        "weight": 2.2281
+      },
+      {
+        "term": "aula_inteligente",
+        "weight": 2.2281
+      },
+      {
+        "term": "aula_inteligente sonido_aula",
+        "weight": 2.2281
+      },
+      {
+        "term": "sonido_aula",
+        "weight": 2.2281
       },
       {
         "term": "salon",
-        "weight": 1.6494
+        "weight": 1.5972
       },
       {
-        "term": "la pantalla",
-        "weight": 1.6236
+        "term": "imagen",
+        "weight": 1.2602
       },
       {
-        "term": "en la",
-        "weight": 1.5877
+        "term": "videobeam",
+        "weight": 1.202
       },
       {
-        "term": "sobrecalentamiento reportado",
-        "weight": 1.5439
+        "term": "aula inteligente",
+        "weight": 1.1846
       },
       {
-        "term": "del salon",
-        "weight": 1.5366
+        "term": "inteligente",
+        "weight": 1.1846
       },
       {
-        "term": "pantalla reportado",
-        "weight": 1.477
-      },
-      {
-        "term": "agotada",
-        "weight": 1.4752
-      },
-      {
-        "term": "lampara",
-        "weight": 1.4752
-      },
-      {
-        "term": "lampara agotada",
-        "weight": 1.4752
-      },
-      {
-        "term": "el videoproyector",
-        "weight": 1.4257
-      },
-      {
-        "term": "videoproyector muestra",
-        "weight": 1.4064
-      },
-      {
-        "term": "alerta de",
-        "weight": 1.4064
+        "term": "aguachica afecta",
+        "weight": 1.1693
       }
     ],
     "Conectividad y Redes Wi-Fi": [
       {
-        "term": "enlace",
-        "weight": 1.8541
+        "term": "internet",
+        "weight": 2.1978
+      },
+      {
+        "term": "conectividad",
+        "weight": 2.0036
       },
       {
         "term": "eduroam",
-        "weight": 1.8264
+        "weight": 1.9603
       },
       {
-        "term": "el aula",
-        "weight": 1.7607
+        "term": "internet red_inalambrica",
+        "weight": 1.7653
       },
       {
-        "term": "enlace reportado",
-        "weight": 1.5962
+        "term": "red_inalambrica conectividad",
+        "weight": 1.7653
       },
       {
-        "term": "red del",
-        "weight": 1.3856
+        "term": "red_inalambrica",
+        "weight": 1.7653
       },
       {
-        "term": "el wi",
-        "weight": 1.3276
+        "term": "lan",
+        "weight": 1.7215
       },
       {
-        "term": "de red",
-        "weight": 1.3163
+        "term": "vpn",
+        "weight": 1.4937
       },
       {
-        "term": "pero no",
-        "weight": 1.2204
+        "term": "switch",
+        "weight": 1.4104
       },
       {
-        "term": "permite acceder",
-        "weight": 1.1996
+        "term": "inalambrica",
+        "weight": 1.37
       },
       {
-        "term": "conectado pero",
-        "weight": 1.1996
+        "term": "equipo_computo wifi",
+        "weight": 1.3454
       },
       {
-        "term": "fi aparece",
-        "weight": 1.1996
+        "term": "puerto",
+        "weight": 1.1815
       },
       {
-        "term": "acceder al",
-        "weight": 1.1996
+        "term": "conectividad switch",
+        "weight": 1.181
       },
       {
-        "term": "institucional ni",
-        "weight": 1.1996
+        "term": "wifi",
+        "weight": 1.181
       },
       {
-        "term": "aparece conectado",
-        "weight": 1.1996
-      },
-      {
-        "term": "acceder",
-        "weight": 1.1996
+        "term": "eduroam internet",
+        "weight": 1.181
       }
     ],
     "Correo Institucional y Cuentas": [
       {
-        "term": "semestre",
-        "weight": 1.625
-      },
-      {
         "term": "cuenta",
-        "weight": 1.6168
-      },
-      {
-        "term": "autenticacion",
-        "weight": 1.6164
-      },
-      {
-        "term": "semestre reportado",
-        "weight": 1.5561
+        "weight": 2.8558
       },
       {
         "term": "buzon",
-        "weight": 1.5155
+        "weight": 2.1137
+      },
+      {
+        "term": "contrasena",
+        "weight": 1.8794
+      },
+      {
+        "term": "institucional",
+        "weight": 1.776
+      },
+      {
+        "term": "correo_institucional cuenta",
+        "weight": 1.7457
+      },
+      {
+        "term": "contrasena clave",
+        "weight": 1.7457
+      },
+      {
+        "term": "clave correo_institucional",
+        "weight": 1.7457
+      },
+      {
+        "term": "correo_institucional",
+        "weight": 1.7457
+      },
+      {
+        "term": "clave",
+        "weight": 1.6101
+      },
+      {
+        "term": "comportamiento contrasena",
+        "weight": 1.5225
+      },
+      {
+        "term": "cuota reportado",
+        "weight": 1.4126
+      },
+      {
+        "term": "buzon institucional",
+        "weight": 1.3327
       },
       {
         "term": "mfa",
-        "weight": 1.4921
+        "weight": 1.2085
       },
       {
-        "term": "de acceso",
-        "weight": 1.4484
+        "term": "institucional unicesar",
+        "weight": 1.1802
       },
       {
-        "term": "institucional no",
-        "weight": 1.4477
-      },
-      {
-        "term": "para",
-        "weight": 1.3752
-      },
-      {
-        "term": "requiere habilitar",
-        "weight": 1.352
-      },
-      {
-        "term": "acceso para",
-        "weight": 1.352
-      },
-      {
-        "term": "habilitar cuenta",
-        "weight": 1.352
-      },
-      {
-        "term": "institucional permisos",
-        "weight": 1.352
-      },
-      {
-        "term": "docente vinculado",
-        "weight": 1.352
-      },
-      {
-        "term": "este semestre",
-        "weight": 1.352
+        "term": "cuenta institucional",
+        "weight": 1.1801
       }
     ],
     "Equipos de Cómputo e Impresoras": [
       {
+        "term": "computador",
+        "weight": 2.0903
+      },
+      {
+        "term": "falla_hardware",
+        "weight": 2.0028
+      },
+      {
+        "term": "equipo_computo",
+        "weight": 1.9705
+      },
+      {
+        "term": "pc",
+        "weight": 1.7121
+      },
+      {
+        "term": "torre",
+        "weight": 1.671
+      },
+      {
+        "term": "encendido",
+        "weight": 1.4502
+      },
+      {
+        "term": "oficina",
+        "weight": 1.3298
+      },
+      {
+        "term": "escaner",
+        "weight": 1.3107
+      },
+      {
         "term": "impresora",
-        "weight": 2.273
+        "weight": 1.2685
       },
       {
-        "term": "la impresora",
-        "weight": 2.0954
+        "term": "computador pc",
+        "weight": 1.2648
       },
       {
-        "term": "emite pitidos",
-        "weight": 1.6349
+        "term": "pc equipo_computo",
+        "weight": 1.2648
       },
       {
-        "term": "pitidos",
-        "weight": 1.6349
+        "term": "inmediato agradezco",
+        "weight": 1.1314
       },
       {
-        "term": "monitor",
-        "weight": 1.5334
+        "term": "toner",
+        "weight": 1.1229
       },
       {
-        "term": "windows reportado",
-        "weight": 1.529
+        "term": "luces",
+        "weight": 1.0636
       },
       {
-        "term": "azul",
-        "weight": 1.4798
-      },
-      {
-        "term": "pantallazo azul",
-        "weight": 1.4798
-      },
-      {
-        "term": "pantallazo",
-        "weight": 1.4798
-      },
-      {
-        "term": "monitor reportado",
-        "weight": 1.4317
-      },
-      {
-        "term": "presionar encendido",
-        "weight": 1.3894
-      },
-      {
-        "term": "presionar",
-        "weight": 1.3894
-      },
-      {
-        "term": "imagen en",
-        "weight": 1.3894
-      },
-      {
-        "term": "el monitor",
-        "weight": 1.3894
-      },
-      {
-        "term": "encendido no",
-        "weight": 1.3894
+        "term": "enciende luces",
+        "weight": 1.0636
       }
     ],
     "Plataformas Académicas (Aula Web / Vortal)": [
       {
-        "term": "aula web",
-        "weight": 1.9715
+        "term": "vortal",
+        "weight": 3.9543
+      },
+      {
+        "term": "plataforma_academica",
+        "weight": 2.7018
+      },
+      {
+        "term": "aula_web",
+        "weight": 2.7018
+      },
+      {
+        "term": "vortal aula_web",
+        "weight": 2.7018
+      },
+      {
+        "term": "aula_web plataforma_academica",
+        "weight": 2.7018
       },
       {
         "term": "web",
-        "weight": 1.9715
+        "weight": 1.9594
       },
       {
-        "term": "datos reportado",
-        "weight": 1.5016
+        "term": "aula web",
+        "weight": 1.9594
       },
       {
-        "term": "en vortal",
-        "weight": 1.4632
+        "term": "aula",
+        "weight": 1.3666
       },
       {
-        "term": "asignaturas",
-        "weight": 1.3266
+        "term": "web reportado",
+        "weight": 1.3241
       },
       {
-        "term": "asignaturas matriculadas",
-        "weight": 1.3266
+        "term": "academico",
+        "weight": 1.2685
       },
       {
-        "term": "tras ingresar",
-        "weight": 1.3266
+        "term": "academica",
+        "weight": 1.1992
       },
       {
-        "term": "las asignaturas",
-        "weight": 1.3266
+        "term": "regular vortal",
+        "weight": 1.1888
       },
       {
-        "term": "web no",
-        "weight": 1.3266
+        "term": "bloque modulo",
+        "weight": 1.1
       },
       {
-        "term": "el modulo",
-        "weight": 1.3266
+        "term": "portal reportado",
+        "weight": 1.0349
       },
       {
-        "term": "ingresar con",
-        "weight": 1.3266
-      },
-      {
-        "term": "con la",
-        "weight": 1.3266
-      },
-      {
-        "term": "matriculadas tras",
-        "weight": 1.3266
-      },
-      {
-        "term": "muestra las",
-        "weight": 1.3266
-      },
-      {
-        "term": "las",
-        "weight": 1.3266
+        "term": "comportamiento vortal",
+        "weight": 1.0176
       }
     ],
     "Software y Licenciamiento": [
       {
-        "term": "instalar",
-        "weight": 2.2455
+        "term": "software",
+        "weight": 3.2731
       },
       {
         "term": "licencia",
-        "weight": 2.1943
-      },
-      {
-        "term": "equipo reportado",
-        "weight": 2.1466
-      },
-      {
-        "term": "paquete",
-        "weight": 1.8704
+        "weight": 2.0033
       },
       {
         "term": "activacion",
-        "weight": 1.6458
+        "weight": 1.9669
       },
       {
-        "term": "de licencias",
-        "weight": 1.4954
+        "term": "licenciamiento",
+        "weight": 1.742
       },
       {
-        "term": "servidor de",
-        "weight": 1.4954
+        "term": "instalar",
+        "weight": 1.732
       },
       {
-        "term": "licencias",
-        "weight": 1.4954
+        "term": "matlab",
+        "weight": 1.728
       },
       {
-        "term": "en los",
-        "weight": 1.4044
+        "term": "autocad",
+        "weight": 1.728
       },
       {
-        "term": "los equipos",
-        "weight": 1.4044
+        "term": "solicita",
+        "weight": 1.6802
       },
       {
-        "term": "paquete estadistico",
-        "weight": 1.3734
+        "term": "spss",
+        "weight": 1.6075
       },
       {
-        "term": "estadistico",
-        "weight": 1.3734
+        "term": "office",
+        "weight": 1.5637
       },
       {
-        "term": "clave de",
-        "weight": 1.3112
+        "term": "ingenieria arroja",
+        "weight": 1.548
       },
       {
-        "term": "la aplicacion",
-        "weight": 1.3112
+        "term": "cupos",
+        "weight": 1.548
       },
       {
-        "term": "computador solicita",
-        "weight": 1.3112
+        "term": "activacion cupos",
+        "weight": 1.548
+      },
+      {
+        "term": "licencias software",
+        "weight": 1.548
+      },
+      {
+        "term": "error activacion",
+        "weight": 1.548
       }
     ]
   },
@@ -395,17 +395,17 @@
       "model_id": "keyword_baseline",
       "display_name": "Dummy / Keyword Baseline (Reglas Simples)",
       "is_baseline": true,
-      "rationale": "Clasificador determinístico basado únicamente en reglas manuales de coincidencia de palabras clave (sin vectorización TF-IDF ni aprendizaje de contexto). Sirve como punto de comparación base.",
-      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/keyword_baseline.joblib",
-      "train_seconds": 0.007,
-      "latency_ms": 0.0972,
+      "rationale": "Clasificador determinístico basado únicamente en reglas manuales de coincidencia de palabras clave (sin vectorización TF-IDF ni aprendizaje de contexto).",
+      "artifact_path": "models/keyword_baseline.joblib",
+      "train_seconds": 0.006,
+      "latency_ms": 0.2431,
       "cv_folds": 5,
-      "cv_f1_mean": 0.7796,
-      "cv_f1_std": 0.004,
-      "accuracy": 0.7438,
-      "precision_macro": 0.8455,
-      "recall_macro": 0.7391,
-      "f1_macro": 0.7731,
+      "cv_f1_mean": 0.8829,
+      "cv_f1_std": 0.0036,
+      "accuracy": 0.8785,
+      "precision_macro": 0.9186,
+      "recall_macro": 0.8665,
+      "f1_macro": 0.8847,
       "labels": [
         "Aulas Inteligentes y Videoproyectores",
         "Conectividad y Redes Wi-Fi",
@@ -416,52 +416,52 @@
       ],
       "confusion_matrix": [
         [
-          358,
-          97,
+          370,
+          72,
           4,
-          1,
+          10,
           3,
-          0
-        ],
-        [
-          3,
-          720,
-          1,
-          3,
-          92,
-          0
-        ],
-        [
-          2,
-          174,
-          424,
-          2,
-          66,
           3
         ],
         [
-          4,
-          81,
+          2,
+          826,
+          3,
           1,
-          350,
-          20,
+          6,
+          2
+        ],
+        [
+          3,
+          93,
+          566,
+          2,
+          6,
+          4
+        ],
+        [
+          0,
+          5,
+          2,
+          448,
+          8,
           1
         ],
         [
-          13,
-          228,
-          4,
           1,
-          546,
-          1
+          116,
+          4,
+          2,
+          647,
+          4
         ],
         [
-          13,
-          56,
-          20,
+          3,
+          49,
+          19,
           1,
-          10,
-          229
+          0,
+          246
         ]
       ]
     },
@@ -469,17 +469,17 @@
       "model_id": "multinomial_nb",
       "display_name": "Multinomial Naive Bayes (Alpha=0.5 Tuned)",
       "is_baseline": false,
-      "rationale": "Modelo probabilístico bayesiano sobre TF-IDF (unigramas y bigramas) con suavizado de Laplace ajustado (alpha=0.5); muy rápido para inferencia pero asume independencia condicional entre términos.",
-      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/multinomial_nb.joblib",
-      "train_seconds": 1.956,
-      "latency_ms": 0.1389,
+      "rationale": "Modelo probabilístico bayesiano sobre TF-IDF (1-2) con sinónimos TIC, stopwords y suavizado de Laplace (alpha=0.5).",
+      "artifact_path": "models/multinomial_nb.joblib",
+      "train_seconds": 3.385,
+      "latency_ms": 0.2439,
       "cv_folds": 5,
-      "cv_f1_mean": 0.9756,
-      "cv_f1_std": 0.0021,
-      "accuracy": 0.9703,
-      "precision_macro": 0.9713,
-      "recall_macro": 0.9649,
-      "f1_macro": 0.968,
+      "cv_f1_mean": 0.9736,
+      "cv_f1_std": 0.0013,
+      "accuracy": 0.9731,
+      "precision_macro": 0.9711,
+      "recall_macro": 0.9705,
+      "f1_macro": 0.9708,
       "labels": [
         "Aulas Inteligentes y Videoproyectores",
         "Conectividad y Redes Wi-Fi",
@@ -490,52 +490,52 @@
       ],
       "confusion_matrix": [
         [
-          447,
-          3,
-          7,
-          2,
+          448,
+          1,
           4,
-          0
-        ],
-        [
-          3,
-          806,
-          2,
-          3,
-          4,
-          1
-        ],
-        [
           3,
           3,
-          651,
-          3,
-          8,
           3
         ],
         [
-          3,
-          5,
+          2,
+          825,
           4,
-          435,
-          8,
+          1,
+          6,
           2
         ],
         [
-          2,
-          3,
           4,
-          1,
-          781,
+          3,
+          655,
+          2,
+          6,
+          4
+        ],
+        [
+          0,
+          2,
+          2,
+          448,
+          10,
           2
         ],
         [
           1,
-          11,
-          5,
+          4,
+          4,
           2,
-          3,
-          307
+          757,
+          6
+        ],
+        [
+          4,
+          5,
+          4,
+          1,
+          0,
+          304
         ]
       ]
     },
@@ -543,17 +543,17 @@
       "model_id": "logistic_regression",
       "display_name": "Logistic Regression (TF-IDF 1-2, C=2.0)",
       "is_baseline": false,
-      "rationale": "Clasificador lineal discriminativo con regularización L2 (C=2.0) sobre bigramas TF-IDF y balanceo de clases; entrega probabilidades calibradas ideales para flujos Human-in-the-Loop y explicabilidad de coeficientes.",
-      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/logistic_regression.joblib",
-      "train_seconds": 2.716,
-      "latency_ms": 0.1437,
+      "rationale": "Clasificador lineal discriminativo con regularización L2 (C=2.0) sobre bigramas TF-IDF, sinónimos TIC y stopwords.",
+      "artifact_path": "models/logistic_regression.joblib",
+      "train_seconds": 4.12,
+      "latency_ms": 0.2426,
       "cv_folds": 5,
-      "cv_f1_mean": 0.9756,
-      "cv_f1_std": 0.0021,
-      "accuracy": 0.9703,
-      "precision_macro": 0.9713,
-      "recall_macro": 0.9649,
-      "f1_macro": 0.968,
+      "cv_f1_mean": 0.9736,
+      "cv_f1_std": 0.0013,
+      "accuracy": 0.9731,
+      "precision_macro": 0.9711,
+      "recall_macro": 0.9705,
+      "f1_macro": 0.9708,
       "labels": [
         "Aulas Inteligentes y Videoproyectores",
         "Conectividad y Redes Wi-Fi",
@@ -564,52 +564,52 @@
       ],
       "confusion_matrix": [
         [
-          447,
-          3,
-          7,
-          2,
+          448,
+          1,
           4,
-          0
-        ],
-        [
-          3,
-          806,
-          2,
-          3,
-          4,
-          1
-        ],
-        [
           3,
           3,
-          651,
-          3,
-          8,
           3
         ],
         [
-          3,
-          5,
+          2,
+          825,
           4,
-          435,
-          8,
+          1,
+          6,
           2
         ],
         [
-          2,
-          3,
           4,
-          1,
-          781,
+          3,
+          655,
+          2,
+          6,
+          4
+        ],
+        [
+          0,
+          2,
+          2,
+          448,
+          10,
           2
         ],
         [
           1,
-          11,
-          5,
+          4,
+          4,
           2,
-          3,
-          307
+          757,
+          6
+        ],
+        [
+          4,
+          5,
+          4,
+          1,
+          0,
+          304
         ]
       ]
     },
@@ -617,17 +617,17 @@
       "model_id": "linear_svc",
       "display_name": "LinearSVC Calibrado (CalibratedClassifierCV)",
       "is_baseline": false,
-      "rationale": "Máquina de Soporte Vectorial de alto margen lineal sobre espacio disperso TF-IDF (unigramas+bigramas), calibrada mediante Platt Scaling (CalibratedClassifierCV) para emitir probabilidades reales de confianza.",
-      "artifact_path": "C:/Users/nayid/Documents/Tareas/ESPECIALIZACION DE INGENIERIA DE SOFTWARE/Electiva 1/MesaDeServiciosMVP/models/linear_svc.joblib",
-      "train_seconds": 5.643,
-      "latency_ms": 0.1601,
+      "rationale": "Máquina de Soporte Vectorial de alto margen lineal sobre TF-IDF (1-2) con sinónimos TIC y Platt Scaling.",
+      "artifact_path": "models/linear_svc.joblib",
+      "train_seconds": 5.773,
+      "latency_ms": 0.2283,
       "cv_folds": 5,
-      "cv_f1_mean": 0.9756,
-      "cv_f1_std": 0.0021,
-      "accuracy": 0.9703,
-      "precision_macro": 0.9713,
-      "recall_macro": 0.9649,
-      "f1_macro": 0.968,
+      "cv_f1_mean": 0.9736,
+      "cv_f1_std": 0.0013,
+      "accuracy": 0.9731,
+      "precision_macro": 0.9711,
+      "recall_macro": 0.9705,
+      "f1_macro": 0.9708,
       "labels": [
         "Aulas Inteligentes y Videoproyectores",
         "Conectividad y Redes Wi-Fi",
@@ -638,52 +638,52 @@
       ],
       "confusion_matrix": [
         [
-          447,
-          3,
-          7,
-          2,
+          448,
+          1,
           4,
-          0
-        ],
-        [
-          3,
-          806,
-          2,
-          3,
-          4,
-          1
-        ],
-        [
           3,
           3,
-          651,
-          3,
-          8,
           3
         ],
         [
-          3,
-          5,
+          2,
+          825,
           4,
-          435,
-          8,
+          1,
+          6,
           2
         ],
         [
-          2,
-          3,
           4,
-          1,
-          781,
+          3,
+          655,
+          2,
+          6,
+          4
+        ],
+        [
+          0,
+          2,
+          2,
+          448,
+          10,
           2
         ],
         [
           1,
-          11,
-          5,
+          4,
+          4,
           2,
-          3,
-          307
+          757,
+          6
+        ],
+        [
+          4,
+          5,
+          4,
+          1,
+          0,
+          304
         ]
       ]
     }

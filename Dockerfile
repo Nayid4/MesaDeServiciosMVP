@@ -15,6 +15,6 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 8501 8888
+EXPOSE 8000 8888
 
-CMD ["sh", "-c", "python -m src.bootstrap && streamlit run dashboard/app.py --server.port=8501 --server.address=0.0.0.0"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

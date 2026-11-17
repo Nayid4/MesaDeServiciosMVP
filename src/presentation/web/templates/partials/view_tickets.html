@@ -1,0 +1,172 @@
+<!-- VISTA 2: GESTIÓN DE TICKETS -->
+<section id="view-tickets" class="hidden max-w-7xl mx-auto space-y-5">
+  <div class="flex flex-wrap items-start justify-between gap-4">
+    <div class="space-y-1">
+      <p class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#006837]">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+        <span>OPERACIONES · ITIL v4</span>
+      </p>
+      <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Gestión de tickets</h1>
+      <p class="text-xs sm:text-sm text-slate-600">Administra, prioriza y da seguimiento a los casos de servicio.</p>
+    </div>
+    <button id="tickets-create-btn" type="button" class="hidden inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs sm:text-sm font-semibold shadow-xs transition cursor-pointer">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M12 18v-6" /><path d="M9 15h6" />
+      </svg>
+      <span>Crear ticket</span>
+    </button>
+  </div>
+
+  <!-- Barra de vistas guardadas -->
+  <div id="tickets-saved-views" class="bg-white rounded-2xl border border-slate-200/80 p-3 casagbi-shadow-card flex flex-wrap items-center justify-between gap-2.5">
+    <div class="flex flex-wrap items-center gap-1.5 text-xs">
+      <span class="text-xs font-medium text-slate-600 mr-1 px-1">Vistas</span>
+      <button type="button" data-saved-view="all" class="px-3 py-1.5 rounded-xl bg-emerald-50 text-[#006837] border border-emerald-200 font-semibold cursor-pointer transition">Todos</button>
+      <button type="button" data-saved-view="my-active" class="px-3 py-1.5 rounded-xl text-slate-700 hover:bg-slate-100 font-medium cursor-pointer transition">Mi bandeja</button>
+      <button type="button" data-saved-view="unassigned" class="px-3 py-1.5 rounded-xl text-slate-700 hover:bg-slate-100 font-medium cursor-pointer transition">Sin asignar</button>
+      <button type="button" data-saved-view="sla-risk" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-slate-700 hover:bg-slate-100 font-medium cursor-pointer transition">
+        <svg class="w-3.5 h-3.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+        <span>Riesgo SLA</span>
+      </button>
+      <button type="button" data-saved-view="resolved" class="px-3 py-1.5 rounded-xl text-slate-700 hover:bg-slate-100 font-medium cursor-pointer transition">Resueltos</button>
+    </div>
+    <div class="flex flex-wrap items-center gap-2 text-xs">
+      <select id="custom-saved-views-select" aria-label="Vistas personalizadas guardadas" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs bg-white text-slate-700">
+        <option value="">Mis vistas</option>
+      </select>
+      <button id="save-current-view-btn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200 bg-emerald-50/80 hover:bg-emerald-100 text-[#006837] text-xs font-semibold cursor-pointer transition">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        <span>Guardar vista</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel de carga de técnicos para Coordinador/Admin -->
+  <div id="coordinator-workload-panel" class="hidden bg-white rounded-2xl border border-slate-200/80 p-4 casagbi-shadow-card space-y-2.5">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700">Carga operativa por técnico activo</h2>
+      <span class="text-[11px] text-slate-600">Tickets en curso (Asignado / En atención / En espera / Reabierto)</span>
+    </div>
+    <div id="coordinator-workload-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2.5 text-xs"></div>
+  </div>
+
+  <!-- Tabla y filtros con paginación SQL -->
+  <div class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden casagbi-shadow-card">
+    <div class="p-4 border-b border-slate-100 space-y-3">
+      <div class="flex flex-wrap items-center gap-2.5">
+        <div class="flex-1 min-w-[220px] relative flex items-center">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" />
+          </svg>
+          <label for="filter-search" class="sr-only">Buscar por radicado, asunto o solicitante</label>
+          <input id="filter-search" type="search" placeholder="Buscar por radicado, asunto o solicitante..." class="w-full pl-10 pr-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#006837] focus:ring-2 focus:ring-[#006837]/15" />
+          <span id="tickets-search-indicator" aria-live="polite" class="hidden ml-2 text-[11px] font-semibold text-[#006837] shrink-0">Buscando...</span>
+        </div>
+        <select id="filter-status" aria-label="Filtrar por estado" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white text-slate-700">
+          <option value="">Todos los estados</option>
+        </select>
+        <select id="filter-priority" aria-label="Filtrar por prioridad" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white text-slate-700">
+          <option value="">Todas las prioridades</option>
+        </select>
+        <button id="tickets-more-filters-btn" type="button" aria-expanded="false" aria-controls="tickets-extra-filters" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 cursor-pointer transition">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" /></svg>
+          <span>Más filtros</span>
+        </button>
+        <button id="refresh-tickets-btn" type="button" class="px-3.5 py-2 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold cursor-pointer transition">
+          Actualizar
+        </button>
+      </div>
+
+      <div id="tickets-extra-filters" class="hidden pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2.5">
+        <select id="filter-sede" aria-label="Filtrar por sede" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white text-slate-700"><option value="">Todas las sedes</option></select>
+        <select id="filter-service" aria-label="Filtrar por servicio" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white text-slate-700"><option value="">Todos los servicios</option></select>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
+        <p id="tickets-view-count" class="text-slate-600"><strong class="text-slate-900">0 tickets</strong> en esta vista</p>
+        <select id="filter-sort" aria-label="Ordenar tickets" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs bg-white font-semibold text-slate-700">
+          <option value="priority_asc_deadline_asc">Orden: prioridad y vencimiento</option>
+          <option value="deadline_asc">Orden: vencimiento más próximo</option>
+          <option value="priority_asc">Orden: prioridad P1 a P4</option>
+          <option value="created_desc">Orden: más recientes</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 uppercase text-[11px]">
+          <tr>
+            <th scope="col" class="px-4 py-3">Radicado</th>
+            <th scope="col" class="px-4 py-3">Asunto y servicio</th>
+            <th scope="col" class="px-4 py-3">Solicitante</th>
+            <th scope="col" class="px-4 py-3">Prioridad</th>
+            <th scope="col" class="px-4 py-3">Estado</th>
+            <th scope="col" class="px-4 py-3">SLA</th>
+            <th scope="col" class="px-4 py-3">Técnico</th>
+          </tr>
+        </thead>
+        <tbody id="tickets-table-body" class="divide-y divide-slate-100"></tbody>
+      </table>
+    </div>
+
+    <div id="tickets-pagination" class="px-4 py-3 bg-slate-50/60 border-t border-slate-100 text-xs text-slate-600">
+      <span id="tickets-page-info">Mostrando 0 resultados</span>
+    </div>
+  </div>
+
+  <p class="flex items-center gap-2 text-xs text-slate-600">
+    <svg class="w-4 h-4 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" />
+    </svg>
+    <span>Los tiempos SLA se calculan según el horario hábil institucional OR-04 (zona America/Bogota).</span>
+  </p>
+
+  <!-- Barra de pestañas en celular -->
+  <div id="detail-mobile-tabs" class="hidden xl:hidden bg-white rounded-2xl border border-slate-200 p-1.5 grid grid-cols-2 gap-1.5">
+    <button type="button" data-detail-tab="info" class="py-2 rounded-xl bg-[#006837] text-white text-xs font-semibold cursor-pointer">Ficha y Línea de Tiempo</button>
+    <button type="button" data-detail-tab="chat" class="py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">Chat en Vivo</button>
+  </div>
+
+  <!-- Panel Dividido 2 Columnas de Detalle + Chat WebSocket Multimedia -->
+  <div id="ticket-detail-container" class="hidden grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+    <div id="ticket-detail-left" class="xl:col-span-7 space-y-5"></div>
+
+    <div id="ticket-detail-chat-panel" class="hidden xl:flex xl:col-span-5 bg-white rounded-2xl border border-slate-200/80 casagbi-shadow-card flex-col h-[640px] overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between gap-2">
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">Chat en Tiempo Real del Ticket</h3>
+          <p id="ws-participants-label" class="text-[11px] text-slate-600">Conectando sala WebSocket...</p>
+          <p id="chat-typing-indicator" class="hidden text-[11px] font-medium text-[#006837]"></p>
+        </div>
+        <span id="ws-status-pill" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-200 text-slate-700">Conectando</span>
+      </div>
+      <div id="ticket-chat-messages" class="flex-1 overflow-y-auto thin-scroll p-4 space-y-3 bg-slate-50/40" aria-live="polite"></div>
+      <div id="chat-reply-banner" class="hidden px-3.5 py-2 bg-emerald-50 border-t border-emerald-200 flex items-center justify-between gap-2 text-xs text-slate-700">
+        <span id="chat-reply-text" class="truncate"></span>
+        <button id="chat-reply-cancel" type="button" class="text-slate-700 hover:text-slate-900 font-semibold cursor-pointer">Cancelar</button>
+      </div>
+      <div id="chat-attachments-preview" class="hidden px-3.5 py-2 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center gap-2 text-[11px]"></div>
+
+      <form id="ticket-chat-form" class="p-3 bg-white border-t border-slate-200 space-y-2">
+        <input id="chat-file-input" type="file" multiple class="hidden" accept=".jpg,.jpeg,.png,.webp,.pdf,.docx,.xlsx,.txt,.webm,.ogg,.mp3,.wav,.m4a,.mp4" />
+        <div class="flex items-center gap-1.5">
+          <button id="chat-attach-btn" type="button" aria-label="Adjuntar archivos" title="Adjuntar archivos (máx. 5, 10 MB)" class="p-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 transition cursor-pointer shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+            </svg>
+          </button>
+          <button id="chat-record-btn" type="button" aria-label="Grabar nota de voz" title="Grabar nota de voz" class="p-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 transition cursor-pointer shrink-0">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+          </button>
+          <label for="ticket-chat-input" class="sr-only">Mensaje del chat</label>
+          <input id="ticket-chat-input" type="text" placeholder="Escribe un mensaje en tiempo real..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-[#006837]" />
+          <button id="ticket-chat-send-btn" type="submit" class="px-4 py-2 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold cursor-pointer shrink-0">Enviar</button>
+        </div>
+        <p id="chat-audio-status" class="hidden text-[11px] font-medium text-red-700"></p>
+      </form>
+    </div>
+  </div>
+</section>
