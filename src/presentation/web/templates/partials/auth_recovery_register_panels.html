@@ -1,0 +1,111 @@
+<!-- Estado 2: Recuperación de Acceso -->
+<div id="auth-view-forgot" class="hidden space-y-5">
+  <form id="forgot-password-form" class="space-y-4" novalidate>
+    <div>
+      <label for="forgot-email" class="block text-xs font-semibold text-slate-800 mb-1.5">Correo institucional</label>
+      <div class="relative flex items-center">
+        <span class="absolute left-3.5 text-slate-400 pointer-events-none">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+        </span>
+        <input id="forgot-email" type="email" required autocomplete="email" placeholder="usuario@unicesar.edu.co" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#006837]/20 focus:border-[#006837] transition" />
+      </div>
+      <p id="forgot-email-hint" class="text-[11px] text-slate-500 mt-1.5">Debe pertenecer al dominio @unicesar.edu.co.</p>
+    </div>
+
+    <button id="forgot-submit-btn" type="submit" class="w-full py-3 px-4 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-sm font-semibold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
+      <span>Enviar instrucciones de recuperación</span>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+    </button>
+
+    <div id="forgot-status-msg" role="status" aria-live="polite" class="hidden text-xs text-emerald-950 bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 space-y-1.5"></div>
+  </form>
+
+  <div class="text-center text-xs">
+    <a href="/reset-password" class="font-semibold text-slate-600 hover:text-[#006837] hover:underline">¿Ya tienes un token temporal? Restablecer contraseña</a>
+  </div>
+
+  <div class="pt-4 border-t border-slate-200 text-center text-xs text-slate-600">
+    <span>¿Ya recuerdas tu contraseña?</span>
+    <button id="back-to-login-from-forgot" type="button" class="ml-1 font-bold text-[#006837] hover:text-[#004d28] hover:underline cursor-pointer">
+      Volver a iniciar sesión
+    </button>
+  </div>
+</div>
+
+<!-- Estado 3: Registro de Cuenta Institucional -->
+<div id="auth-view-register" class="hidden space-y-5">
+  <form id="register-form" class="space-y-4" novalidate>
+    <div>
+      <label for="reg-name" class="block text-xs font-semibold text-slate-800 mb-1.5">Nombre completo</label>
+      <div class="relative flex items-center">
+        <span class="absolute left-3.5 text-slate-400 pointer-events-none">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+          </svg>
+        </span>
+        <input id="reg-name" type="text" required minlength="3" autocomplete="name" placeholder="Ej. María Pérez Gómez" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#006837]/20 focus:border-[#006837] transition" />
+      </div>
+      <p id="reg-name-hint" class="hidden text-[11px] text-red-700 font-semibold mt-1"></p>
+    </div>
+
+    <div>
+      <label for="reg-email" class="block text-xs font-semibold text-slate-800 mb-1.5">Correo institucional</label>
+      <div class="relative flex items-center">
+        <span class="absolute left-3.5 text-slate-400 pointer-events-none">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+        </span>
+        <input id="reg-email" type="email" required autocomplete="email" placeholder="usuario@unicesar.edu.co" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#006837]/20 focus:border-[#006837] transition" />
+      </div>
+      <p id="reg-email-hint" class="text-[11px] text-slate-500 mt-1.5">Debe pertenecer al dominio @unicesar.edu.co.</p>
+    </div>
+
+    <div>
+      <label for="reg-password" class="block text-xs font-semibold text-slate-800 mb-1.5">Crea una contraseña</label>
+      <div class="relative flex items-center">
+        <span class="absolute left-3.5 text-slate-400 pointer-events-none">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        </span>
+        <input id="reg-password" type="password" required minlength="8" autocomplete="new-password" placeholder="Mínimo 8 caracteres" class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#006837]/20 focus:border-[#006837] transition" />
+        <button id="reg-password-toggle" type="button" aria-label="Mostrar u ocultar contraseña de registro" aria-pressed="false" class="absolute right-3 p-1 rounded-lg text-slate-400 hover:text-slate-700 cursor-pointer transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
+          </svg>
+        </button>
+      </div>
+      <div class="casagbi-strength-meter mt-2"><div id="reg-strength-fill" class="casagbi-strength-fill bg-slate-300" style="width: 0%"></div></div>
+      <p id="reg-password-hint" class="text-[11px] text-slate-500 mt-1">Usa al menos 8 caracteres.</p>
+    </div>
+
+    <div>
+      <label for="reg-sede" class="block text-xs font-semibold text-slate-800 mb-1.5">Sede UPC</label>
+      <select id="reg-sede" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#006837]/20 focus:border-[#006837] transition">
+        <option value="Sede Sabanas (Valledupar)">Sede Sabanas (Valledupar)</option>
+        <option value="Sede Hurtado (Valledupar)">Sede Hurtado (Valledupar)</option>
+        <option value="Seccional Aguachica">Seccional Aguachica</option>
+      </select>
+    </div>
+
+    <label class="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer">
+      <input id="reg-privacy" type="checkbox" required class="mt-0.5 rounded border-slate-300 text-[#006837] focus:ring-[#006837]" />
+      <span>Acepto el <a href="/#privacidad" class="font-semibold text-[#006837] hover:underline">tratamiento de mis datos personales</a> conforme a la política de la UPC (Ley 1581).</span>
+    </label>
+
+    <button id="reg-submit-btn" type="submit" class="w-full py-3 px-4 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-sm font-semibold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
+      <span>Crear cuenta institucional</span>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+    </button>
+  </form>
+
+  <div class="pt-4 border-t border-slate-200 text-center text-xs text-slate-600">
+    <span>¿Ya tienes una cuenta institucional?</span>
+    <button id="back-to-login-from-register" type="button" class="ml-1 font-bold text-[#006837] hover:text-[#004d28] hover:underline cursor-pointer">
+      Iniciar sesión
+    </button>
+  </div>
+</div>

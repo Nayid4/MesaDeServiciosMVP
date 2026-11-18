@@ -200,6 +200,23 @@ def test_admin_user_management_and_modular_html_routes(modular_client: TestClien
         resp = modular_client.get(route)
         assert resp.status_code == 200, f"Falló ruta {route}: {resp.status_code}"
 
+    login_html = modular_client.get("/login").text
+    for expected in (
+        "Servicios de apoyo para toda la comunidad universitaria.",
+        'id="auth-view-login"',
+        'id="auth-view-forgot"',
+        'id="auth-view-register"',
+        'id="login-password-toggle"',
+        'id="login-remember-email"',
+        'id="reg-password-toggle"',
+        'id="reg-strength-fill"',
+    ):
+        assert expected in login_html
+
+    reset_html = modular_client.get("/reset-password?token=demo123").text
+    for expected in ('id="reset-new-toggle"', 'id="reset-confirm-toggle"', 'id="reset-strength-fill"'):
+        assert expected in reset_html
+
 
 def test_prod_mode_seeds_missing_base_users_and_allows_password_login(tmp_path, monkeypatch):
     """Con DEMO_MODE apagado (prod), se precargan cuentas base por correo y acceden con contraseña."""

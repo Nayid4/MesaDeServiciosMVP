@@ -1,0 +1,63 @@
+<!-- Estado 1: Iniciar Sesión Institucional -->
+<div id="auth-view-login" class="space-y-5">
+  <div class="rounded-xl border border-emerald-200/80 bg-[#F1F8F4] px-3.5 py-2.5 flex items-center gap-2.5 text-xs font-medium text-[#004d28]">
+    <svg class="w-4 h-4 text-[#006837] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" />
+    </svg>
+    <span>Usa tu correo <strong class="font-semibold">@unicesar.edu.co</strong></span>
+  </div>
+
+  <form id="login-form" class="space-y-4" novalidate>
+    <div>
+      <label for="login-email" class="block text-xs font-semibold text-slate-800 mb-1.5">Correo institucional</label>
+      <div class="relative flex items-center">
+        <span class="absolute left-3.5 text-slate-400 pointer-events-none">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+        </span>
+        <input id="login-email" type="email" required autocomplete="email" placeholder="usuario@unicesar.edu.co" class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#006837]/20 focus:border-[#006837] transition" />
+      </div>
+      <p id="login-email-hint" class="text-[11px] text-slate-500 mt-1.5">Debe pertenecer al dominio @unicesar.edu.co.</p>
+    </div>
+
+    <div>
+      <label for="login-password" class="block text-xs font-semibold text-slate-800 mb-1.5">Contraseña</label>
+      <div class="relative flex items-center">
+        <span class="absolute left-3.5 text-slate-400 pointer-events-none">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        </span>
+        <input id="login-password" type="password" required autocomplete="current-password" placeholder="Ingresa tu contraseña" class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#006837]/20 focus:border-[#006837] transition" />
+        <button id="login-password-toggle" type="button" aria-label="Mostrar u ocultar contraseña" aria-pressed="false" class="absolute right-3 p-1 rounded-lg text-slate-400 hover:text-slate-700 cursor-pointer transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+      <label class="inline-flex items-center gap-2 text-slate-600 cursor-pointer select-none">
+        <input id="login-remember-email" type="checkbox" class="rounded border-slate-300 text-[#006837] focus:ring-[#006837]" />
+        <span>Recordar mi correo</span>
+      </label>
+      <button id="toggle-forgot-btn" type="button" aria-expanded="false" aria-controls="auth-view-forgot" class="font-semibold text-[#006837] hover:text-[#004d28] hover:underline cursor-pointer">
+        ¿Olvidaste tu contraseña?
+      </button>
+    </div>
+
+    <button id="login-submit-btn" type="submit" class="w-full py-3 px-4 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-sm font-semibold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
+      <span>Ingresar con cuenta institucional</span>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+    </button>
+  </form>
+
+  <div class="pt-4 border-t border-slate-200 text-center text-xs text-slate-600">
+    <span>¿Eres estudiante o docente y aún no tienes cuenta?</span>
+    <button id="toggle-register-btn" type="button" aria-expanded="false" aria-controls="auth-view-register" class="ml-1 font-bold text-[#006837] hover:text-[#004d28] hover:underline cursor-pointer">
+      Crear cuenta institucional
+    </button>
+  </div>
+</div>
