@@ -1,5 +1,5 @@
 /**
- * Contenedor Smart de Bandeja, Cola y Detalle de Tickets (delega acciones y creación a servicios).
+ * Contenedor Smart de Bandeja, Carga del Equipo y Detalle Dedicado de Tickets.
  */
 (function (root) {
   function createTicketsContainer({ getUser, getCatalog, chatContainer }) {
@@ -7,6 +7,7 @@
     let debouncedSearch = null;
     let selectedTicketId = null;
     let currentDetail = null;
+    let activeDetailSubtab = "summary";
     let currentPage = 1;
     const pageSize = 10;
     let unassignedOnly = false;
@@ -25,6 +26,22 @@
         if (el && urlParams[key] !== undefined) el.value = urlParams[key];
       });
       if (urlParams.page && Number(urlParams.page) >= 1) currentPage = Number(urlParams.page);
+    }
+
+    function closeTicketDetail({ syncUrl = true } = {}) {
+      selectedTicketId = null;
+      currentDetail = null;
+      activeDetailSubtab = "summary";
+      root.CasagbiApi?.abortRequestKey?.("tickets:detail");
+      chatContainer?.destroy?.();
+      root.CasagbiTicketsView?.showListShell();
+      if (syncUrl && typeof window !== "undefined") {
+        if (window.location.pathname.startsWith("/tickets/")) {
+          window.history.replaceState(null, "", "/dashboard#tickets");
+        } else {
+          root.CasagbiUtils?.syncUrlParams({ ticket_id: "" });
+        }
+      }
     }
 
     async function loadTickets(resetPage = false) {
@@ -60,8 +77,9 @@
           requestKey: "tickets:list",
           signal: abortCtrl?.signal,
         });
+        view.renderSummaryBanner(res.summary || {});
         view.renderCoordinatorWorkload(res.technician_loads || []);
-        view.renderTicketsTable(res.tickets || [], selectedTicketId, openTicketDetail);
+        view.renderTicketsTable(res.tickets || [], selectedTicketId, (tid) => openTicketDetail(tid));
         view.renderPagination(
           res.page || 1,
           res.total_pages || res.pages || 1,
@@ -78,26 +96,41 @@
       }
     }
 
-    async function openTicketDetail(ticketId) {
+    async function openTicketDetail(ticketId, opts = {}) {
+      if (Number(selectedTicketId) !== Number(ticketId)) activeDetailSubtab = "summary";
+      if (opts.subtab) activeDetailSubtab = opts.subtab;
       selectedTicketId = ticketId;
       const view = root.CasagbiTicketsView;
       view?.renderDetailLoading();
+      root.CasagbiUtils?.syncUrlParams({ ticket_id: ticketId });
+      document.getElementById("main-content")?.scrollTo({ top: 0, behavior: "auto" });
+
       try {
         const detail = await root.CasagbiApi.get(`/api/v1/tickets/${ticketId}`, {
           requestKey: "tickets:detail",
           signal: abortCtrl?.signal,
         });
         currentDetail = detail;
-        view.renderTicketDetail(detail, getUser(), getCatalog(), {
-          onTransition: (tid, body) => actionsCtrl.handleTransition(tid, body),
-          onReassign: (tid, body) => actionsCtrl.handleReassign(tid, body),
-          onAdjustPriority: (tid, body) => actionsCtrl.handleAdjustPriority(tid, body),
-          onRateClose: (tid, body) => actionsCtrl.handleRateClose(tid, body),
-          onProposeKbArticle: (t) => actionsCtrl.handleProposeKbArticle(t),
-        });
+        view.renderTicketDetail(
+          detail,
+          getUser(),
+          getCatalog(),
+          {
+            onTransition: (tid, body, o) => actionsCtrl.handleTransition(tid, body, o),
+            onReassign: (tid, body, o) => actionsCtrl.handleReassign(tid, body, o),
+            onAdjustPriority: (tid, body, o) => actionsCtrl.handleAdjustPriority(tid, body, o),
+            onRateClose: (tid, body, o) => actionsCtrl.handleRateClose(tid, body, o),
+            onProposeKbArticle: (t) => actionsCtrl.handleProposeKbArticle(t),
+            onSubtabChange: (tab) => { activeDetailSubtab = tab; },
+          },
+          { subtab: activeDetailSubtab }
+        );
         if (chatContainer) await chatContainer.mount(detail);
       } catch (err) {
-        if (err?.name !== "AbortError") root.CasagbiApi.showToast(err.message, "error", err.problem?.title || "Detalle de ticket");
+        if (err?.name !== "AbortError") {
+          root.CasagbiApi.showToast(err.message, "error", err.problem?.title || "Detalle de ticket");
+          closeTicketDetail();
+        }
       }
     }
 
@@ -115,13 +148,23 @@
       loadTickets(true);
     }
 
+    function resetAllFilters() {
+      ["filter-search", "filter-status", "filter-priority", "filter-sede", "filter-service"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      const sortEl = document.getElementById("filter-sort");
+      if (sortEl) sortEl.value = "priority_asc_deadline_asc";
+      applyPresetView("all");
+    }
+
     async function mount(ctx = {}) {
       destroy();
       abortCtrl = new AbortController();
       const sig = abortCtrl.signal;
       actionsCtrl = root.CasagbiTicketActionsController.createTicketActionsController({
         getCurrentDetail: () => currentDetail,
-        onReloadAndOpen: async (tid) => { await loadTickets(false); await openTicketDetail(tid); },
+        onReloadAndOpen: async (tid, opts) => { await loadTickets(false); await openTicketDetail(tid, opts); },
       });
       applyUrlFilters();
       actionsCtrl.renderCustomSavedViewsSelect();
@@ -129,6 +172,10 @@
       debouncedSearch = root.CasagbiUtils.debounce(() => loadTickets(true), 350);
       document.getElementById("filter-search")?.addEventListener("input", () => { setSearching(true); debouncedSearch(); }, { signal: sig });
       document.getElementById("refresh-tickets-btn")?.addEventListener("click", () => loadTickets(false), { signal: sig });
+      document.getElementById("tickets-reset-filters-btn")?.addEventListener("click", resetAllFilters, { signal: sig });
+      document.getElementById("detail-back-top-btn")?.addEventListener("click", () => closeTicketDetail(), { signal: sig });
+      document.getElementById("detail-back-bottom-btn")?.addEventListener("click", () => closeTicketDetail(), { signal: sig });
+
       ["filter-status", "filter-priority", "filter-sede", "filter-service", "filter-sort"].forEach((id) => {
         document.getElementById(id)?.addEventListener("change", () => loadTickets(true), { signal: sig });
       });
@@ -186,6 +233,8 @@
         actionsCtrl.updateSavedViewChips("all");
       }
 
+      if (!ctx.openTicketId) closeTicketDetail({ syncUrl: false });
+
       if (ctx.preset) applyPresetView(ctx.preset);
       else {
         if (ctx.searchQuery !== undefined) {
@@ -194,7 +243,7 @@
         }
         await loadTickets(Boolean(ctx.clearFilters));
       }
-      if (ctx.openTicketId) await openTicketDetail(ctx.openTicketId);
+      if (ctx.openTicketId) await openTicketDetail(ctx.openTicketId, { subtab: ctx.subtab });
     }
 
     function destroy() {
@@ -206,7 +255,7 @@
       setSearching(false);
     }
 
-    return { mount, destroy, refresh: () => loadTickets(false), openTicketDetail, activePreset: () => activePreset };
+    return { mount, destroy, refresh: () => loadTickets(false), openTicketDetail, closeTicketDetail, activePreset: () => activePreset };
   }
 
   function createTicketFormContainer(opts) {

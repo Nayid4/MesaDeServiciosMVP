@@ -54,6 +54,7 @@ from src.application.tickets.queries.list_tickets import (
     ListTicketsPaginatedQueryHandler,
     ListTicketsQuery,
     ListTicketsQueryHandler,
+    compute_ticket_list_summary,
 )
 from src.application.tickets.ticket_helpers import (
     GUEST_OTP_OUTBOX,
@@ -113,5 +114,6 @@ __all__ = [
     "_is_guest_otp_enabled",
     "authorize_ticket_access",
     "compute_technician_workloads",
+    "compute_ticket_list_summary",
     "is_guest_otp_enabled",
 ]

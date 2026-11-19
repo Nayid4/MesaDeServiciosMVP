@@ -131,7 +131,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     await window.CasagbiRouter.mountTab(tabId, user.role, context);
   }
 
-  nav.querySelectorAll("[data-tab]").forEach((btn) => btn.addEventListener("click", () => switchTab(btn.getAttribute("data-tab"))));
+  nav.querySelectorAll("[data-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetTab = btn.getAttribute("data-tab");
+      if (targetTab === "tickets") ticketsContainer.closeTicketDetail();
+      switchTab(targetTab);
+    });
+  });
   document.getElementById("topbar-profile-btn")?.addEventListener("click", () => switchTab("profile"));
   document.getElementById("sidebar-profile-btn")?.addEventListener("click", () => switchTab("profile"));
   document.getElementById("sidebar-help-btn")?.addEventListener("click", () => {
@@ -196,7 +202,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   catalog = await helpers.loadCatalog();
   await helpers.loadNotifications();
+  const bootEl = document.getElementById("workspace-boot-context");
+  const initialTab = bootEl?.getAttribute("data-initial-tab") || "";
+  const initialTicketId = Number(bootEl?.getAttribute("data-initial-ticket-id") || 0);
+  const urlParams = window.CasagbiUtils?.readUrlParams ? window.CasagbiUtils.readUrlParams() : {};
+  const urlTicketId = Number(urlParams.ticket_id || 0);
+
   const pendingDraft = window.CasagbiAuthStore.popPendingDraft();
-  if (pendingDraft && allowedTabs.includes("create-ticket")) await switchTab("create-ticket", { pendingDraft });
-  else await switchTab(window.CasagbiRouter.resolveInitialTab(user.role));
+  if (pendingDraft && allowedTabs.includes("create-ticket")) {
+    await switchTab("create-ticket", { pendingDraft });
+  } else if (initialTab && window.CasagbiRouter.isTabAllowed(user.role, initialTab)) {
+    await switchTab(initialTab, initialTicketId ? { openTicketId: initialTicketId } : {});
+  } else {
+    const resolvedTab = window.CasagbiRouter.resolveInitialTab(user.role);
+    const openCtx = resolvedTab === "tickets" && urlTicketId > 0 ? { openTicketId: urlTicketId } : {};
+    await switchTab(resolvedTab, openCtx);
+  }
 });

@@ -1,5 +1,5 @@
 /**
- * Controlador de acciones ITIL v4 y vistas guardadas sobre tickets.
+ * Controlador de acciones ITIL v4, adjuntos en gestión y vistas guardadas sobre tickets.
  */
 (function (root) {
   const SAVED_VIEWS_STORAGE_KEY = "casagbi_saved_ticket_views_v1";
@@ -29,7 +29,7 @@
     const esc = root.CasagbiApi.escapeHtml;
     const saved = readCustomSavedViews();
     sel.innerHTML = [
-      `<option value="">Mis vistas guardadas (${saved.length})...</option>`,
+      `<option value="">Vistas guardadas (${saved.length})...</option>`,
       ...saved.map((v, idx) => `<option value="${idx}">${esc(v.name)}</option>`),
     ].join("");
   }
@@ -38,13 +38,22 @@
     const host = document.getElementById("tickets-saved-views");
     if (!host) return;
     host.querySelectorAll("[data-saved-view]").forEach((btn) => {
-      const isSelected = btn.getAttribute("data-saved-view") === preset;
-      const base = btn.getAttribute("data-saved-view") === "sla-risk"
-        ? "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl cursor-pointer transition"
-        : "px-3 py-1.5 rounded-xl cursor-pointer transition";
+      const key = btn.getAttribute("data-saved-view");
+      const isSelected = key === preset;
+      const base = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl cursor-pointer transition";
       btn.className = isSelected
         ? `${base} bg-emerald-50 text-[#006837] border border-emerald-200 font-semibold`
-        : `${base} text-slate-700 hover:bg-slate-100 font-medium`;
+        : `${base} text-slate-700 hover:bg-slate-100 font-medium border border-transparent`;
+      const badge = btn.querySelector("[data-view-count]");
+      if (badge) {
+        if (key === "sla-risk" && !isSelected) {
+          badge.className = "px-1.5 py-0.2 rounded-full bg-amber-50 text-amber-800 text-[10px] font-bold tabular-nums border border-amber-200";
+        } else if (isSelected) {
+          badge.className = "px-1.5 py-0.2 rounded-full bg-white text-[#006837] text-[10px] font-bold tabular-nums border border-emerald-200";
+        } else {
+          badge.className = "px-1.5 py-0.2 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold tabular-nums";
+        }
+      }
     });
   }
 
@@ -63,7 +72,36 @@
       }
     }
 
-    async function handleTransition(ticketId, body) {
+    async function handleUploadAttachments(ticketId, files, caption = "") {
+      const picked = Array.from(files || []).slice(0, 5);
+      if (!picked.length) return { ok: true };
+      const fd = new FormData();
+      picked.forEach((f) => fd.append("files", f));
+      const cleanCaption = String(caption || "").trim();
+      fd.append("content", cleanCaption || "Evidencia adjunta desde gestión del ticket.");
+      if (root.CasagbiTicketChatWS?.generateClientMessageId) {
+        fd.append("client_message_id", root.CasagbiTicketChatWS.generateClientMessageId());
+      }
+      try {
+        const res = await root.CasagbiApi.postForm(`/api/v1/tickets/${ticketId}/attachments`, fd);
+        root.CasagbiApi.showToast(`${picked.length} archivo(s) adjuntado(s) al caso.`, "success");
+        return { ok: true, res };
+      } catch (err) {
+        root.CasagbiApi.showToast(err.message, "error", err.problem?.title || "Error adjuntando evidencia");
+        return { ok: false };
+      }
+    }
+
+    async function handleTransition(ticketId, body, opts = {}) {
+      const files = opts.files || [];
+      if (files.length) {
+        const uploaded = await handleUploadAttachments(ticketId, files, body.comment || "");
+        if (!uploaded.ok) return false;
+      }
+      if (!body.new_status || body.new_status === "__ATTACH_ONLY__") {
+        await onReloadAndOpen?.(ticketId, { subtab: opts.subtab || "manage" });
+        return true;
+      }
       const res = await postVersionedAction(
         `/api/v1/tickets/${ticketId}/transition`,
         body,
@@ -71,10 +109,11 @@
         "Error de transición",
         true
       );
-      if (res) await onReloadAndOpen?.(ticketId);
+      if (res) await onReloadAndOpen?.(ticketId, { subtab: opts.subtab || "manage" });
+      return Boolean(res);
     }
 
-    async function handleReassign(ticketId, body) {
+    async function handleReassign(ticketId, body, opts = {}) {
       const res = await postVersionedAction(
         `/api/v1/tickets/${ticketId}/reassign`,
         body,
@@ -82,10 +121,11 @@
         "Error",
         false
       );
-      if (res) await onReloadAndOpen?.(ticketId);
+      if (res) await onReloadAndOpen?.(ticketId, { subtab: opts.subtab || "manage" });
+      return Boolean(res);
     }
 
-    async function handleAdjustPriority(ticketId, body) {
+    async function handleAdjustPriority(ticketId, body, opts = {}) {
       const res = await postVersionedAction(
         `/api/v1/tickets/${ticketId}/priority`,
         body,
@@ -93,10 +133,11 @@
         "Error ajustando prioridad",
         false
       );
-      if (res) await onReloadAndOpen?.(ticketId);
+      if (res) await onReloadAndOpen?.(ticketId, { subtab: opts.subtab || "manage" });
+      return Boolean(res);
     }
 
-    async function handleRateClose(ticketId, body) {
+    async function handleRateClose(ticketId, body, opts = {}) {
       const res = await postVersionedAction(
         `/api/v1/tickets/${ticketId}/rate`,
         body,
@@ -104,7 +145,8 @@
         "Error",
         true
       );
-      if (res) await onReloadAndOpen?.(ticketId);
+      if (res) await onReloadAndOpen?.(ticketId, { subtab: opts.subtab || "summary" });
+      return Boolean(res);
     }
 
     function handleProposeKbArticle(ticket) {
@@ -116,6 +158,7 @@
       saveCustomView,
       renderCustomSavedViewsSelect,
       updateSavedViewChips,
+      handleUploadAttachments,
       handleTransition,
       handleReassign,
       handleAdjustPriority,

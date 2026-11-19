@@ -1,0 +1,136 @@
+<!-- MODO DETALLE DEDICADO DE TICKET ITIL v4 -->
+<div id="ticket-detail-container" class="hidden space-y-5">
+  <!-- Cabecera superior + breadcrumb -->
+  <div class="space-y-3">
+    <nav aria-label="Ruta de regreso" class="flex items-center gap-2 text-xs">
+      <button id="detail-back-top-btn" type="button" class="inline-flex items-center gap-1.5 font-semibold text-[#006837] hover:text-[#004d28] transition cursor-pointer">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M19 12H5" /><path d="m12 19-7-7 7-7" />
+        </svg>
+        <span>Gestión de tickets</span>
+      </button>
+      <span class="text-slate-400" aria-hidden="true">/</span>
+      <span id="detail-breadcrumb-code" class="font-mono font-medium text-slate-600">--</span>
+    </nav>
+
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div class="space-y-1.5 min-w-0 flex-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#006837]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+            <span>DETALLE DEL CASO</span>
+          </span>
+          <span id="detail-version-pill" class="px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono font-semibold text-slate-600">v1</span>
+        </div>
+        <h1 id="detail-title" class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight break-words">Cargando ticket...</h1>
+        <p id="detail-meta-subtitle" class="text-xs text-slate-600 font-mono">--</p>
+      </div>
+      <div id="detail-header-badges" class="flex flex-wrap items-center gap-2 shrink-0"></div>
+    </div>
+  </div>
+
+  <!-- Stepper horizontal de ciclo de vida ITIL v4 -->
+  <div id="detail-stepper-card" class="bg-white rounded-2xl border border-slate-200/80 p-5 casagbi-shadow-card space-y-4"></div>
+
+  <!-- Selector de sección (Resumen / Gestión / Historial) -->
+  <div class="space-y-3">
+    <div class="flex flex-wrap items-end justify-between gap-2">
+      <div>
+        <p class="text-[11px] font-bold tracking-wider uppercase text-slate-600">DETALLE DEL CASO</p>
+        <p class="text-xs text-slate-600">Resumen, gestión e historial del ticket.</p>
+      </div>
+      <span id="detail-events-count" class="inline-flex items-center gap-1.5 text-xs text-slate-600 font-medium">
+        <svg class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span id="detail-events-count-label">0 eventos registrados</span>
+      </span>
+    </div>
+
+    <div id="detail-subtabs" role="tablist" aria-label="Vistas del detalle del ticket" class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-white border border-slate-200/80 casagbi-shadow-card">
+      <button type="button" role="tab" aria-selected="true" data-detail-subtab="summary" class="py-2.5 px-4 rounded-xl bg-[#006837] text-white text-xs sm:text-sm font-semibold text-center transition cursor-pointer">Resumen</button>
+      <button type="button" role="tab" aria-selected="false" data-detail-subtab="manage" class="py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold text-center transition cursor-pointer">Gestión</button>
+      <button type="button" role="tab" aria-selected="false" data-detail-subtab="history" class="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold text-center transition cursor-pointer">
+        <span>Historial</span>
+        <span id="detail-history-badge" class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold tabular-nums">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Pestañas móviles (Ficha vs Chat) debajo de xl -->
+  <div id="detail-mobile-tabs" class="hidden xl:hidden grid grid-cols-2 gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 casagbi-shadow-card">
+    <button type="button" data-detail-tab="info" class="py-2 rounded-xl bg-[#006837] text-white text-xs font-semibold cursor-pointer">Ficha e ITIL</button>
+    <button type="button" data-detail-tab="chat" class="py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">Conversación en vivo</button>
+  </div>
+
+  <!-- Layout 2 columnas: Panel activo izquierda + Chat persistente derecha -->
+  <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+    <div id="ticket-detail-left" class="xl:col-span-7 space-y-4"></div>
+
+    <!-- Chat Multimedia Persistente -->
+    <div id="ticket-detail-chat-panel" class="hidden xl:flex xl:col-span-5 bg-white rounded-2xl border border-slate-200/80 casagbi-shadow-card flex-col h-[680px] overflow-hidden">
+      <div class="px-4 py-3.5 border-b border-slate-200/80 flex items-center justify-between gap-3 bg-white">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/80 text-[#006837] flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <h3 class="text-sm font-bold text-slate-900 truncate">Conversación del ticket</h3>
+            <p id="chat-messages-subtitle" class="text-[11px] text-slate-600 truncate">WebSocket en tiempo real</p>
+          </div>
+        </div>
+        <span id="ws-status-pill" class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-[#006837] border border-emerald-200/80 shrink-0">Conectando...</span>
+      </div>
+
+      <div class="px-4 py-2 bg-slate-50/70 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+        <span id="chat-ticket-code" class="font-mono font-bold text-[#006837]">--</span>
+        <span id="ws-participants-label" class="text-slate-600 truncate max-w-[240px]">Sincronizando sesión</span>
+      </div>
+
+      <div id="chat-typing-indicator" class="hidden px-4 py-1 text-[11px] italic text-[#006837] bg-emerald-50 border-b border-emerald-100"></div>
+      <div id="chat-reply-banner" class="hidden px-4 py-2 bg-blue-50 border-b border-blue-200 flex items-center justify-between text-xs text-blue-900">
+        <span id="chat-reply-text" class="truncate"></span>
+        <button id="chat-reply-cancel" type="button" class="text-blue-700 font-bold ml-2 cursor-pointer">Cancelar</button>
+      </div>
+
+      <div id="ticket-chat-messages" class="flex-1 overflow-y-auto thin-scroll p-4 space-y-3 bg-[#FAFBFD]"></div>
+
+      <div id="chat-attachments-preview" class="hidden px-4 py-2 bg-slate-50 border-t border-slate-200 flex flex-wrap gap-2 text-xs"></div>
+      <div id="chat-audio-status" class="hidden px-4 py-1.5 bg-red-50 border-t border-red-200 text-xs text-red-800 flex items-center justify-between"></div>
+
+      <form id="ticket-chat-form" class="p-3.5 border-t border-slate-200/80 bg-white flex items-center gap-2">
+        <input id="chat-file-input" type="file" multiple class="hidden" accept="image/*,.pdf,.doc,.docx,.txt,.log,.csv,.webm,.ogg,.mp3,.wav" />
+        <button id="chat-attach-btn" type="button" title="Adjuntar archivos (máx. 5 x 10MB)" aria-label="Adjuntar archivo al chat" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 cursor-pointer transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+          </svg>
+        </button>
+        <button id="chat-record-btn" type="button" title="Grabar nota de voz" aria-label="Grabar nota de voz" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 cursor-pointer transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="22" />
+          </svg>
+        </button>
+        <input id="ticket-chat-input" type="text" placeholder="Escribe una actualización..." class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-[#006837]/25 focus:border-[#006837]" />
+        <button id="ticket-chat-send-btn" type="submit" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#006837] hover:bg-[#004d28] text-white text-xs font-semibold cursor-pointer transition">
+          <span>Enviar</span>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Barra inferior de retorno -->
+  <div class="pt-4 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-3 text-xs">
+    <button id="detail-back-bottom-btn" type="button" class="inline-flex items-center gap-1.5 font-semibold text-[#006837] hover:text-[#004d28] transition cursor-pointer">
+      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M19 12H5" /><path d="m12 19-7-7 7-7" />
+      </svg>
+      <span>Volver a la gestión de tickets</span>
+    </button>
+    <p class="text-slate-600">CASAGBI · Mesa de Servicios TIC · SLA institucional en horario hábil OR-04</p>
+  </div>
+</div>

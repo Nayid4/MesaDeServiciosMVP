@@ -18,6 +18,7 @@ from src.application.tickets import (
     ReassignTicketCommand,
     TransitionTicketCommand,
     compute_technician_workloads,
+    compute_ticket_list_summary,
 )
 from src.infrastructure.composition import create_uow, get_cqrs_bus
 from src.presentation.api.dependencies.auth_guards import (
@@ -89,9 +90,10 @@ def list_tickets(
 ) -> Dict[str, Any]:
     bus = get_cqrs_bus()
     tech_loads: List[Dict[str, Any]] = []
-    if current_user.get("role") in ("coordinador", "admin", "director"):
-        with create_uow() as uow:
+    with create_uow() as uow:
+        if current_user.get("role") in ("tecnico", "coordinador", "admin", "director"):
             tech_loads = compute_technician_workloads(uow)
+        ticket_summary = compute_ticket_list_summary(uow, current_user)
 
     if page is not None and not sla_risk_only:
         paged = bus.query(
@@ -113,6 +115,7 @@ def list_tickets(
             "tickets": paged["items"],
             "total_pages": paged["pages"],
             "technician_loads": tech_loads,
+            "summary": ticket_summary,
         }
 
     items = bus.query(
@@ -144,8 +147,14 @@ def list_tickets(
             "has_next": page < total_pages,
             "has_prev": page > 1,
             "technician_loads": tech_loads,
+            "summary": ticket_summary,
         }
-    return {"tickets": items, "total": total, "technician_loads": tech_loads}
+    return {
+        "tickets": items,
+        "total": total,
+        "technician_loads": tech_loads,
+        "summary": ticket_summary,
+    }
 
 
 @router.post("", status_code=201)

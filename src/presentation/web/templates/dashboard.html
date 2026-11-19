@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="workspace-boot-context" class="hidden" data-initial-tab="{{ initial_tab | default('') }}" data-initial-ticket-id="{{ initial_ticket_id | default('') }}"></div>
 <div class="min-h-screen flex bg-[#F6F8FA] relative">
   <div id="mobile-drawer-backdrop" class="hidden fixed inset-0 z-40 bg-slate-950/60 md:hidden"></div>
   {% include "partials/sidebar.html" %}
@@ -35,6 +36,7 @@
 <script src="/static/js/features/chat/chat_view.js"></script>
 <script src="/static/js/features/chat/services/audio_recorder.js"></script>
 <script src="/static/js/features/chat/chat_container.js"></script>
+<script src="/static/js/features/tickets/components/ticket_detail_panels_view.js"></script>
 <script src="/static/js/features/tickets/components/ticket_detail_view.js"></script>
 <script src="/static/js/features/tickets/components/ticket_modals_view.js"></script>
 <script src="/static/js/features/tickets/tickets_view.js"></script>

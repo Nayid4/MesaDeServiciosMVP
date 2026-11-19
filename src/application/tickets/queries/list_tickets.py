@@ -49,6 +49,66 @@ def _actor_ticket_scope(actor: Dict[str, Any]) -> tuple[Optional[int], Optional[
     return None, None
 
 
+def _attach_user_names(uow: IUnitOfWork, rows: List[Dict[str, Any]]) -> None:
+    if not rows:
+        return
+    user_names = {int(u["id"]): u["full_name"] for u in uow.users.list_users()}
+    for row in rows:
+        req_id = row.get("requester_id")
+        tech_id = row.get("assigned_tech_id")
+        row["requester_full_name"] = user_names.get(int(req_id)) if req_id is not None else None
+        row["assigned_tech_full_name"] = user_names.get(int(tech_id)) if tech_id is not None else None
+
+
+def compute_ticket_list_summary(uow: IUnitOfWork, actor: Dict[str, Any]) -> Dict[str, Any]:
+    """Calcula totales reales del alcance del actor para banner SLA y vistas rápidas."""
+    requester_id, assigned_tech_id = _actor_ticket_scope(actor)
+    rows = uow.tickets.list_tickets(
+        requester_id=requester_id,
+        assigned_tech_id=assigned_tech_id,
+        limit=1000,
+    )
+    closed_like = ("Resuelto", "Cerrado", "Anulado")
+    open_count = 0
+    breached_count = 0
+    at_risk_count = 0
+    my_active = 0
+    unassigned = 0
+    sla_risk = 0
+    resolved = 0
+
+    for row in rows:
+        sla = calculate_sla_status(row)
+        status = row.get("status") or ""
+        if status not in closed_like:
+            open_count += 1
+            if sla.get("semaphore") == "Rojo" or sla.get("is_breached"):
+                breached_count += 1
+            elif sla.get("semaphore") == "Amarillo":
+                at_risk_count += 1
+        if status == "En atención":
+            my_active += 1
+        if status == "Registrado" and not row.get("assigned_tech_id"):
+            unassigned += 1
+        if sla.get("semaphore") in ("Amarillo", "Rojo") or row.get("priority") == "P1 Crítica":
+            sla_risk += 1
+        if status == "Resuelto":
+            resolved += 1
+
+    return {
+        "open_count": open_count,
+        "breached_count": breached_count,
+        "at_risk_count": at_risk_count,
+        "preset_counts": {
+            "all": len(rows),
+            "my-active": my_active,
+            "unassigned": unassigned,
+            "sla-risk": sla_risk,
+            "resolved": resolved,
+        },
+    }
+
+
 class ListTicketsQueryHandler:
     def __init__(self, uow_factory: Callable[[], IUnitOfWork]) -> None:
         self._uow_factory = uow_factory
@@ -66,6 +126,7 @@ class ListTicketsQueryHandler:
                 search=query.search,
                 limit=query.limit,
             )
+            _attach_user_names(uow, rows)
 
         for row in rows:
             row["sla_status"] = calculate_sla_status(row)
@@ -144,6 +205,7 @@ class ListTicketsPaginatedQueryHandler:
                 unassigned_only=query.unassigned_only,
                 sort_by=sql_sort,
             )
+            _attach_user_names(uow, paged.items)
 
         for row in paged.items:
             row["sla_status"] = calculate_sla_status(row)

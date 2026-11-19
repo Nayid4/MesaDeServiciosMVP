@@ -267,3 +267,61 @@ def test_prod_mode_seeds_missing_base_users_and_allows_password_login(tmp_path, 
 
     dispose_engines()
     reset_runtime_dependencies()
+
+
+def test_tickets_list_summary_detail_page_route_and_full_names(modular_client: TestClient):
+    """Valida ruta HTML dedicada /tickets/{id}, conteos SLA reales y nombres completos en detalle."""
+    coord_hdrs = _login_demo(modular_client, "coordinador@unicesar.edu.co")
+    tech_hdrs = _login_demo(modular_client, "tecnico1@unicesar.edu.co")
+
+    # 1. Ruta directa /tickets/1 renderiza workspace apuntando al detalle del ticket #1
+    detail_page = modular_client.get("/tickets/1")
+    assert detail_page.status_code == 200
+    assert 'data-initial-tab="tickets"' in detail_page.text
+    assert 'data-initial-ticket-id="1"' in detail_page.text
+
+    # 2. Dashboard incluye shell de lista, shell de detalle dedicado y scripts modulares
+    dash_html = modular_client.get("/dashboard").text
+    for expected in (
+        'id="tickets-list-shell"',
+        'id="tickets-summary-banner"',
+        'id="tickets-reset-filters-btn"',
+        'id="ticket-detail-container"',
+        'id="detail-stepper-card"',
+        'id="detail-subtabs"',
+        "ticket_detail_panels_view.js",
+    ):
+        assert expected in dash_html
+
+    # 3. Listado incluye summary SLA, preset_counts, technician_loads (técnico y coordinador) y filtro por email
+    tech_list = modular_client.get("/api/v1/tickets?page=1&page_size=5", headers=tech_hdrs)
+    assert tech_list.status_code == 200
+    tjson = tech_list.json()
+    assert "summary" in tjson
+    assert {"open_count", "breached_count", "at_risk_count", "preset_counts"} <= set(tjson["summary"])
+    assert {"all", "my-active", "unassigned", "sla-risk", "resolved"} <= set(
+        tjson["summary"]["preset_counts"]
+    )
+    assert len(tjson["technician_loads"]) >= 1
+
+    coord_search = modular_client.get(
+        "/api/v1/tickets?page=1&page_size=10&q=estudiante@unicesar.edu.co", headers=coord_hdrs
+    )
+    assert coord_search.status_code == 200
+    assert all(
+        "estudiante@unicesar.edu.co" in (row["requester_email"] or "").lower()
+        for row in coord_search.json()["tickets"]
+    )
+
+    # 4. Detalle de ticket entrega requester_full_name y assigned_tech_full_name
+    detail = modular_client.get("/api/v1/tickets/1", headers=coord_hdrs)
+    assert detail.status_code == 200
+    t = detail.json()["ticket"]
+    assert t.get("requester_full_name")
+
+    # 5. Sub-vista dumb ticket_detail_panels_view.js mantiene aislamiento sin red
+    panels_src = Path("src/presentation/web/static/js/features/tickets/components/ticket_detail_panels_view.js").read_text(
+        encoding="utf-8"
+    )
+    for forbidden in ("fetch(", "new WebSocket", "CasagbiApi"):
+        assert forbidden not in panels_src

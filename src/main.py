@@ -90,7 +90,23 @@ def create_app() -> FastAPI:
         return templates.TemplateResponse(
             request=request,
             name="dashboard.html",
-            context={"page_title": "Workspace Operativo · CASAGBI UPC"},
+            context={
+                "page_title": "Workspace Operativo · CASAGBI UPC",
+                "initial_tab": "",
+                "initial_ticket_id": "",
+            },
+        )
+
+    @application.get("/tickets/{ticket_id}", response_class=HTMLResponse, tags=["Web UI"])
+    def ticket_detail_page(request: Request, ticket_id: int) -> HTMLResponse:
+        return templates.TemplateResponse(
+            request=request,
+            name="dashboard.html",
+            context={
+                "page_title": f"Ticket #{ticket_id} · CASAGBI UPC",
+                "initial_tab": "tickets",
+                "initial_ticket_id": ticket_id,
+            },
         )
 
     @application.get("/ticket-track/{code}", response_class=HTMLResponse, tags=["Web UI"])

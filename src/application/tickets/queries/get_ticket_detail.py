@@ -109,6 +109,12 @@ class GetTicketDetailQueryHandler:
             uow.tickets.mark_messages_read(ticket["id"], query.actor["email"])
             uow.commit()
             techs = compute_technician_workloads(uow)
+            req_user = uow.users.get_by_id(ticket["requester_id"]) if ticket.get("requester_id") is not None else None
+            tech_user = (
+                uow.users.get_by_id(ticket["assigned_tech_id"])
+                if ticket.get("assigned_tech_id") is not None
+                else None
+            )
 
         ticket["sla_status"] = calculate_sla_status(ticket)
         if query.actor.get("role") == "invitado":
@@ -123,6 +129,8 @@ class GetTicketDetailQueryHandler:
                 "chat_read_only": ticket["status"] in ("Cerrado", "Anulado"),
                 "available_technicians": [],
             }
+        ticket["requester_full_name"] = req_user.get("full_name") if req_user else None
+        ticket["assigned_tech_full_name"] = tech_user.get("full_name") if tech_user else None
         return {
             "ticket": ticket,
             "audit_events": audit_events,

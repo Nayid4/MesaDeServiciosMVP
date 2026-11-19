@@ -59,17 +59,25 @@ class TicketQueriesMixin:
                     func.lower(func.coalesce(TicketORM.legacy_ticket_number, "")).like(like),
                     func.lower(TicketORM.title).like(like),
                     func.lower(TicketORM.description).like(like),
+                    func.lower(TicketORM.requester_email).like(like),
+                    func.lower(func.coalesce(TicketORM.assigned_tech_email, "")).like(like),
                 )
             )
         if sort_by == "priority":
+            status_rank = case(
+                (TicketORM.status.in_(("Cerrado", "Anulado", "Resuelto")), 1),
+                else_=0,
+            )
             prio_rank = case(
-                (TicketORM.priority == "P1", 1),
-                (TicketORM.priority == "P2", 2),
-                (TicketORM.priority == "P3", 3),
-                (TicketORM.priority == "P4", 4),
+                (TicketORM.priority.in_(("P1", "P1 Crítica")), 1),
+                (TicketORM.priority.in_(("P2", "P2 Alta")), 2),
+                (TicketORM.priority.in_(("P3", "P3 Media")), 3),
+                (TicketORM.priority.in_(("P4", "P4 Baja")), 4),
                 else_=5,
             )
-            return stmt.order_by(asc(prio_rank), asc(TicketORM.resolution_deadline), desc(TicketORM.id))
+            return stmt.order_by(
+                asc(status_rank), asc(prio_rank), asc(TicketORM.resolution_deadline), desc(TicketORM.id)
+            )
         if sort_by == "sla":
             return stmt.order_by(asc(TicketORM.resolution_deadline), desc(TicketORM.id))
         return stmt.order_by(desc(TicketORM.id))
